@@ -23,8 +23,10 @@
   ul { margin: 0 0 14px; padding-left: 20px; }
   table { width: 100%; border-collapse: collapse; font: 14px/1.4 system-ui, sans-serif; margin: 8px 0 18px; }
   th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
-  th { color: var(--ink-2); font-weight: 600; }
-  td.n, th.n { text-align: right; white-space: nowrap; }
+  th { color: var(--ink-2); font-weight: 600; font-size: 12px; line-height: 1.3; vertical-align: bottom; border-bottom: 1px solid var(--ink-2); }
+  td.n, th.n { text-align: right; }
+  td.n { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.n small { font-variant-numeric: normal; }
   tr.group td { color: var(--ink-2); font-weight: 600; padding-top: 14px; }
   .table-scroll { overflow-x: auto; }
   ol.sources { font: 13px/1.5 system-ui, sans-serif; color: var(--ink-2); padding-left: 20px; }
@@ -32,16 +34,23 @@
   .summary h2 { margin-top: 14px; }
   .summary h3 { margin: 18px 0 6px; }
   .summary .lead { font-size: 18px; line-height: 1.5; }
-  .summary td.n, .summary th.n { white-space: normal; width: 22%; }
+  .summary th.n { width: 20%; }
   .why { color: var(--ink-2); }
-  table.wrap td.n, table.wrap th.n { white-space: normal; }
-  table.wrap td:first-child { min-width: 180px; }
+  table.wrap td:first-child { min-width: 160px; }
   td small { display: block; color: var(--muted); font-size: 12px; white-space: nowrap; }
+  td:first-child small { white-space: normal; }
+  .summary td:first-child small { white-space: nowrap; }
   .note { color: var(--ink-2); font: 13px/1.45 system-ui, sans-serif; margin: 0 0 14px; }
   @media (max-width: 600px) {
-    table { font-size: 12px; }
+    table { font-size: 13px; }
+    th { font-size: 11px; }
     th, td { padding: 5px 4px; }
-    table.wrap td:first-child { min-width: 120px; }
+    table.wrap td:first-child { min-width: 100px; }
+    table.dense { font-size: 12px; }
+    table.dense td:first-child { white-space: nowrap; }
+    .summary th, .summary td { padding: 5px 3px; }
+    .summary td.n small { white-space: normal; }
+    table.dense th, table.dense td { padding: 5px 2px; }
   }
 </style>
 </head>
@@ -53,32 +62,32 @@
 <section class="summary" id="summary">
 <h2>Executive summary</h2>
 
-<p class="lead">Six scenarios at once cost $928 a month for a city of half a million and $2,640 for London, simulating 10% of residents, on a 3-year Amazon commitment. Simulating every resident raises that to $1,586 and $7,870 to $13,190. Stored results grow with every scenario kept.</p>
+<p class="lead">Six scenarios at once cost $1,913 a month for a city of half a million and $3,016 for London, simulating 10% of residents. That is a 3-year Amazon commitment with a year of results kept. Simulating every resident raises that to $4,534 and $9,118 to $14,438.</p>
 
 <h3>Six scenarios at once, 10% of residents</h3>
 <div class="table-scroll">
 <table>
-  <tr><th>City</th><th class="n">One scenario needs</th><th class="n">Days a scenario</th><th class="n">A month, Amazon 3-year</th><th class="n">A month, Hetzner</th></tr>
-  <tr><td>Tallinn <small>0.5 million</small></td><td class="n">16 GB</td><td class="n">0.2</td><td class="n">$928</td><td class="n">€1,228</td></tr>
-  <tr><td>Kraków <small>0.8 million</small></td><td class="n">32 GB</td><td class="n">0.7</td><td class="n">$1,326</td><td class="n">€1,458</td></tr>
-  <tr><td>Paris <small>2.2 million</small></td><td class="n">72 GB</td><td class="n">3.8</td><td class="n">$2,640</td><td class="n">€2,213</td></tr>
-  <tr><td>Madrid <small>3.3 million</small></td><td class="n">56 GB</td><td class="n">2.5</td><td class="n">$1,586</td><td class="n">€2,213</td></tr>
-  <tr><td>London <small>8.9 million</small></td><td class="n">112 GB</td><td class="n">9.2</td><td class="n">$2,640</td><td class="n">€3,146</td></tr>
+  <tr><th>City</th><th class="n">Memory a scenario</th><th class="n">Days a scenario</th><th class="n">Amazon 3-year, a month</th><th class="n">Hetzner, a month</th></tr>
+  <tr><td>Tallinn <small>0.5 million</small></td><td class="n">16 GB</td><td class="n">0.2</td><td class="n">$1,913<small>$985 storage</small></td><td class="n">€1,508<small>€280 storage</small></td></tr>
+  <tr><td>Kraków <small>0.8 million</small></td><td class="n">32 GB</td><td class="n">0.7</td><td class="n">$1,900<small>$574 storage</small></td><td class="n">€1,621<small>€163 storage</small></td></tr>
+  <tr><td>Paris <small>2.2 million</small></td><td class="n">72 GB</td><td class="n">3.8</td><td class="n">$2,956<small>$316 storage</small></td><td class="n">€2,303<small>€90 storage</small></td></tr>
+  <tr><td>Madrid <small>3.3 million</small></td><td class="n">56 GB</td><td class="n">2.5</td><td class="n">$2,096<small>$510 storage</small></td><td class="n">€2,358<small>€145 storage</small></td></tr>
+  <tr><td>London <small>8.9 million</small></td><td class="n">112 GB</td><td class="n">9.2</td><td class="n">$3,016<small>$376 storage</small></td><td class="n">€3,253<small>€107 storage</small></td></tr>
 </table>
 </div>
 
 <h3>Six scenarios at once, every resident</h3>
 <div class="table-scroll">
 <table>
-  <tr><th>City</th><th class="n">One scenario needs</th><th class="n">Days a scenario</th><th class="n">A month, Amazon 3-year</th><th class="n">A month, Hetzner</th></tr>
-  <tr><td>Tallinn <small>0.5 million</small></td><td class="n">40 GB</td><td class="n">0.5</td><td class="n">$1,586</td><td class="n">€1,458</td></tr>
-  <tr><td>Kraków <small>0.8 million</small></td><td class="n">72 GB</td><td class="n">1.7</td><td class="n">$2,640</td><td class="n">€2,213</td></tr>
-  <tr><td>Paris <small>2.2 million</small></td><td class="n">192 GB</td><td class="n">10.0</td><td class="n">$3,482</td><td class="n">€5,411</td></tr>
-  <tr><td>Madrid <small>3.3 million</small></td><td class="n">240 GB</td><td class="n">6.5</td><td class="n">$3,482</td><td class="n">€5,411</td></tr>
-  <tr><td>London <small>8.9 million</small></td><td class="n">616 to 890 GB</td><td class="n">24.3</td><td class="n">$7,870 to $13,190</td><td class="n">does not fit</td></tr>
+  <tr><th>City</th><th class="n">Memory a scenario</th><th class="n">Days a scenario</th><th class="n">Amazon 3-year, a month</th><th class="n">Hetzner, a month</th></tr>
+  <tr><td>Tallinn <small>0.5 million</small></td><td class="n">40 GB</td><td class="n">0.5</td><td class="n">$4,534<small>$2,948 storage</small></td><td class="n">€2,317<small>€859 storage</small></td></tr>
+  <tr><td>Kraków <small>0.8 million</small></td><td class="n">72 GB</td><td class="n">1.7</td><td class="n">$4,230<small>$1,590 storage</small></td><td class="n">€2,669<small>€456 storage</small></td></tr>
+  <tr><td>Paris <small>2.2 million</small></td><td class="n">192 GB</td><td class="n">10.0</td><td class="n">$4,265<small>$783 storage</small></td><td class="n">€5,634<small>€223 storage</small></td></tr>
+  <tr><td>Madrid <small>3.3 million</small></td><td class="n">240 GB</td><td class="n">6.5</td><td class="n">$5,168<small>$1,686 storage</small></td><td class="n">€5,896<small>€485 storage</small></td></tr>
+  <tr><td>London <small>8.9 million</small></td><td class="n">616 GB<small>to 890 GB</small></td><td class="n">24.3</td><td class="n">$9,118<small>to $14,438</small></td><td class="n">does not fit<small>over 512 GB</small></td></tr>
 </table>
 </div>
-<p class="note">Every scenario runs on 8 cores, Tallinn on 4. Days are for 200 rounds. A month includes the platform. Paris costs more than Madrid because its model holds more streets. Paying Amazon by the hour costs two to three times the 3-year price, and a 3-year commitment is owed whether the machines work or not. Hetzner's largest server holds 512 GB.</p>
+<p class="note">Every scenario runs on 8 cores, Tallinn on 4. Days are for 200 rounds. A month includes the platform and a year of stored results; London's storage with every resident is $1,248. Storage assumes the six machines busy all month, so a small city stores the most: 900 Tallinn scenarios a month at 10%, against 20 for London. Fewer scenarios store less. Paris costs more than Madrid because its model holds more streets. Paying Amazon by the hour costs two to three times the 3-year price, and a 3-year commitment is owed whether the machines work or not. Hetzner's largest server holds 512 GB.</p>
 
 <h3>What it means</h3>
 <ul>
@@ -86,7 +95,7 @@
   <li>One scenario is one machine. More hardware runs more scenarios at once, never one sooner.</li>
   <li>London has never been built in Polycity, so its figures are fitted from 28 measurements of 24 cities.</li>
   <li>Published models run 300 to 500 rounds. This report plans on 200, which sets the days, not the machine.</li>
-  <li>Stored results grow with every scenario kept. How long they are kept decides the storage bill.</li>
+  <li>A year of stored results can cost as much as the machines. A small city's scenarios finish fastest, so it keeps the most.</li>
 </ul>
 
 <h3>Recommendation</h3>
@@ -106,12 +115,12 @@
 
 <div class="table-scroll">
 <table class="wrap">
-  <tr><th>Machines</th><th class="n">Holds 616 GB a run</th><th class="n">Holds 890 GB a run</th><th class="n">A month, by the hour</th><th class="n">A month, 3-year</th></tr>
-  <tr><td>Six Amazon r6a.24xlarge, 768 GB each, platform on its own machine</td><td class="n">yes</td><td class="n">no</td><td class="n">$29,171</td><td class="n">$13,190</td></tr>
-  <tr><td>Six Amazon x2iedn.8xlarge, 1,024 GB each, platform on its own machine</td><td class="n">yes</td><td class="n">yes</td><td class="n">$37,973</td><td class="n">$12,336</td></tr>
-  <tr><td>Two Amazon x2iedn.16xlarge in one Kubernetes cluster, 2,048 GB each, three runs on each and the platform on one</td><td class="n">yes</td><td class="n">no</td><td class="n">$24,537</td><td class="n">$7,870</td></tr>
-  <tr><td>Two Amazon x2iedn.24xlarge in one Kubernetes cluster, 3,072 GB each</td><td class="n">yes</td><td class="n">yes</td><td class="n">$36,805</td><td class="n">$11,806</td></tr>
-  <tr><td>Hetzner AX162, 512 GB at most</td><td class="n">no</td><td class="n">no</td><td class="n">does not fit</td><td class="n">does not fit</td></tr>
+  <tr><th>Machines</th><th class="n">Holds 616 GB</th><th class="n">Holds 890 GB</th><th class="n">By the hour, a month</th><th class="n">3-year, a month</th></tr>
+  <tr><td>6 × Amazon r6a.24xlarge<small>768 GB each, platform apart</small></td><td class="n">yes</td><td class="n">no</td><td class="n">$29,171</td><td class="n">$13,190</td></tr>
+  <tr><td>6 × Amazon x2iedn.8xlarge<small>1,024 GB each, platform apart</small></td><td class="n">yes</td><td class="n">yes</td><td class="n">$37,973</td><td class="n">$12,336</td></tr>
+  <tr><td>2 × Amazon x2iedn.16xlarge<small>2,048 GB each, 3 runs each, platform included</small></td><td class="n">yes</td><td class="n">no</td><td class="n">$24,537</td><td class="n">$7,870</td></tr>
+  <tr><td>2 × Amazon x2iedn.24xlarge<small>3,072 GB each</small></td><td class="n">yes</td><td class="n">yes</td><td class="n">$36,805</td><td class="n">$11,806</td></tr>
+  <tr><td>Hetzner AX162<small>512 GB at most</small></td><td class="n">no</td><td class="n">no</td><td class="n" colspan="2">does not fit</td></tr>
 </table>
 </div>
 
@@ -124,26 +133,26 @@
 
 <h2 id="storage">Storage</h2>
 
-<p>Each finished scenario keeps its files: the day's events, the residents' plans, noise, exhaust and the maps. Measured on 28 Oct, a Tallinn day keeps 1.21 GB at 1% of residents and 4.07 GB at 10%. That is 68.6 KB for each resident simulated, plus a part for the city that grows with its streets. London is the example below.</p>
+<p>Each finished scenario keeps its files: the day's events, the residents' plans, noise, exhaust and the maps. Measured on 28 Oct, a Tallinn day keeps 1.21 GB at 1% of residents and 4.07 GB at 10%. That is 68.6 KB for each resident simulated, plus a part for the city that grows with its streets. London is the example below. With a year kept, the 12th month's bill is the bill of every month after it, since each month deletes as much as it adds.</p>
 
 <div class="table-scroll">
-<table class="wrap">
-  <tr><th>London, 6 runs at once all month</th><th class="n">Kept per run</th><th class="n">Runs a month</th><th class="n">Added a month</th><th class="n">After a year</th><th class="n">12th month, Amazon</th><th class="n">12th month, Amazon, rarely read</th><th class="n">12th month, Hetzner</th></tr>
-  <tr class="group"><td colspan="8">10% of residents, working disk 84 GB a run</td></tr>
-  <tr><td>50 rounds</td><td class="n">70 GB</td><td class="n">77.4</td><td class="n">5.4 TB</td><td class="n">65 TB</td><td class="n">$1,393</td><td class="n">$764</td><td class="n">€398</td></tr>
-  <tr><td>200 rounds</td><td class="n">70 GB</td><td class="n">19.9</td><td class="n">1.4 TB</td><td class="n">17 TB</td><td class="n">$360</td><td class="n">$196</td><td class="n">€102</td></tr>
-  <tr class="group"><td colspan="8">25% of residents, working disk 194 GB a run</td></tr>
-  <tr><td>50 rounds</td><td class="n">162 GB</td><td class="n">53.0</td><td class="n">8.6 TB</td><td class="n">103 TB</td><td class="n">$2,167</td><td class="n">$1,205</td><td class="n">€627</td></tr>
-  <tr><td>200 rounds</td><td class="n">162 GB</td><td class="n">13.5</td><td class="n">2.2 TB</td><td class="n">26 TB</td><td class="n">$562</td><td class="n">$307</td><td class="n">€160</td></tr>
-  <tr class="group"><td colspan="8">Every resident, working disk 744 GB a run</td></tr>
-  <tr><td>50 rounds</td><td class="n">620 GB</td><td class="n">29.7</td><td class="n">18.4 TB</td><td class="n">221 TB</td><td class="n">$4,590</td><td class="n">$2,585</td><td class="n">€1,346</td></tr>
-  <tr><td>200 rounds</td><td class="n">620 GB</td><td class="n">7.5</td><td class="n">4.7 TB</td><td class="n">56 TB</td><td class="n">$1,196</td><td class="n">$653</td><td class="n">€340</td></tr>
+<table class="dense">
+  <tr><th>London, 6 at once</th><th class="n">Kept a run</th><th class="n">Added a month</th><th class="n">After a year</th><th class="n">Amazon, 12th month</th><th class="n">Hetzner, 12th month</th></tr>
+  <tr class="group"><td colspan="6">10% of residents, working disk 84 GB a run</td></tr>
+  <tr><td>50 rounds</td><td class="n">70 GB</td><td class="n">5.4 TB</td><td class="n">65 TB</td><td class="n">$1,393</td><td class="n">€398</td></tr>
+  <tr><td>200 rounds</td><td class="n">70 GB</td><td class="n">1.4 TB</td><td class="n">17 TB</td><td class="n">$360</td><td class="n">€102</td></tr>
+  <tr class="group"><td colspan="6">25% of residents, working disk 194 GB a run</td></tr>
+  <tr><td>50 rounds</td><td class="n">162 GB</td><td class="n">8.6 TB</td><td class="n">103 TB</td><td class="n">$2,167</td><td class="n">€627</td></tr>
+  <tr><td>200 rounds</td><td class="n">162 GB</td><td class="n">2.2 TB</td><td class="n">26 TB</td><td class="n">$562</td><td class="n">€160</td></tr>
+  <tr class="group"><td colspan="6">Every resident, working disk 744 GB a run</td></tr>
+  <tr><td>50 rounds</td><td class="n">620 GB</td><td class="n">18.4 TB</td><td class="n">221 TB</td><td class="n">$4,590</td><td class="n">€1,346</td></tr>
+  <tr><td>200 rounds</td><td class="n">620 GB</td><td class="n">4.7 TB</td><td class="n">56 TB</td><td class="n">$1,196</td><td class="n">€340</td></tr>
 </table>
 </div>
 
 <ul>
   <li>The bill grows every month while nothing is deleted. Keeping three months at every resident and 50 rounds caps it near $1,236 a month on Amazon.</li>
-  <li>Amazon's store costs about $0.024 a GB a month, its rarely-read class $0.0131. Hetzner's costs about €6.35 a TB.</li>
+  <li>Amazon's store costs about $0.024 a GB a month, or $0.0131 for files rarely read, about 45% less. Hetzner's costs about €6.35 a TB.</li>
   <li>Working disk while a scenario runs adds $44 a month for six London scenarios at 10% and $386 with every resident.</li>
 </ul>
 
@@ -155,11 +164,11 @@
 
 <div class="table-scroll">
 <table>
-  <tr><th>Model</th><th>Residents simulated</th><th class="n">Rounds</th><th>What the authors report</th></tr>
-  <tr><td>Sioux Falls test city [16]</td><td>1,682 to 168,220</td><td class="n">3,000 run, settled by 600 to 800</td><td>1% of residents changed plan each round. The settling round did not depend on the share simulated.</td></tr>
-  <tr><td>Switzerland, the national railway's model, 10% [19]</td><td>about 1 million</td><td class="n">301</td><td>83 hours on an Amazon machine of 32 cores and 256 GB</td></tr>
-  <tr><td>Berlin and Brandenburg, open model 6.4, 10% [18]</td><td>10% of the region</td><td class="n">500</td><td>45% of residents change plan at first, falling to 1%. Changes stop at 90% of rounds.</td></tr>
-  <tr><td>Munich [21], summary only</td><td>1% to 100%</td><td class="n">five counts tested</td><td>A later paper reports that smaller shares settled in far fewer rounds, against the Sioux Falls finding</td></tr>
+  <tr><th>Model</th><th>Residents simulated</th><th>Rounds</th><th>What the authors report</th></tr>
+  <tr><td>Sioux Falls test city [16]</td><td>1,682 to 168,220</td><td>3,000, settled by 600 to 800</td><td>1% of residents changed plan each round. The settling round did not depend on the share simulated.</td></tr>
+  <tr><td>Switzerland, the national railway's model, 10% [19]</td><td>about 1 million</td><td>301</td><td>83 hours on an Amazon machine of 32 cores and 256 GB</td></tr>
+  <tr><td>Berlin and Brandenburg, open model 6.4, 10% [18]</td><td>10% of the region</td><td>500</td><td>45% of residents change plan at first, falling to 1%. Changes stop at 90% of rounds.</td></tr>
+  <tr><td>Munich [21], summary only</td><td>1% to 100%</td><td>five counts tested</td><td>A later paper reports that smaller shares settled in far fewer rounds, against the Sioux Falls finding</td></tr>
 </table>
 </div>
 
@@ -179,9 +188,9 @@
 
 <div class="table-scroll">
 <table>
-  <tr><th>Published run</th><th>Size</th><th class="n">Memory reported</th><th class="n">Polycity's line</th></tr>
-  <tr><td>An engine maker's run [22]</td><td>1 million residents, 250,000 street pieces</td><td class="n">60 to 90 GB</td><td class="n">69 GB engine, 90 GB machine</td></tr>
-  <tr><td>Switzerland at 10% [20]</td><td>about 1 million residents, 1.5 million street pieces</td><td class="n">130 GB</td><td class="n">90 GB engine, 117 GB machine</td></tr>
+  <tr><th>Published run</th><th>Size</th><th class="n">Memory reported</th><th class="n">Polycity's line, machine</th></tr>
+  <tr><td>An engine maker's run [22]</td><td>1 million residents, 250,000 street pieces</td><td class="n">60 to 90 GB</td><td class="n">90 GB<small>69 GB engine</small></td></tr>
+  <tr><td>Switzerland at 10% [20]</td><td>about 1 million residents, 1.5 million street pieces</td><td class="n">130 GB</td><td class="n">117 GB<small>90 GB engine</small></td></tr>
 </table>
 </div>
 
@@ -191,13 +200,21 @@
 
 <p>Across 28 measurements of 24 cities, Polycity's round time grows with residents to the power 0.43: ten times the residents cost two to three times the time. Published runs grow faster at large shares, in step with residents in the Munich study [21].</p>
 
-<p class="why">What follows: the 0.43 power is measured from 1% to 10% only. If time grows in step with residents above 10%, London with every resident takes 655 minutes a round, not 174. Polycity's round is also about 8 times slower than the Swiss model's for the same size [19], which <a href="#shorten">What would shorten a run</a> addresses.</p>
+<p class="why">What follows: the 0.43 power is measured from 1% to 10% only. If time grows in step with residents above 10%, London with every resident takes 655 minutes a round, not 174. Polycity's round is also about 8 times slower than the Swiss model's for the same size [19].</p>
 
 <h3>5. Cores a run</h3>
 
 <p>For Switzerland at 10%, the engine's traffic replay stopped getting faster past 8 threads [19]. An earlier Zurich study found no gain from more cores [16].</p>
 
 <p class="why">What follows: more cores per scenario buy little speed. Hardware buys more scenarios at once, each on 8 cores.</p>
+
+<h3 id="one-on-all">6. All the hardware on one scenario</h3>
+
+<p>A scenario runs as one program on one machine, so today it cannot use six machines. On one larger machine, only the part where residents choose new plans keeps gaining from cores. The traffic replay is about three quarters of a round and stops gaining past 6 to 8 cores, so a round could get at most about a quarter shorter. A London scenario of 200 rounds at 10% would take about 7 days instead of 9.2, on six times the hardware. That is not measured; the Paris runs on 8 and 16 cores in <a href="#tests">Tests before buying</a> would show it.</p>
+
+<p>A research version of the traffic replay does spread across machines [29]. On the Ruhr area at 10%, 491,175 residents, today's replay gained 2.5 times at most, and none past 6 processes. The research version ran 35 times faster than on one core over 1,024 processes, on a supercomputer's network. It is a separate program, skips public transport, and has not joined the engine.</p>
+
+<p class="why">What follows: one scenario on all the hardware is not possible today, and would buy a quarter at most. Buying hardware still buys more scenarios at once.</p>
 
 <h2>Hours and memory by city</h2>
 
@@ -382,9 +399,9 @@
 <div class="table-scroll">
 <table class="wrap">
   <tr><th></th><th class="n">Amazon, 3-year</th><th class="n">Amazon, by the hour</th><th class="n">Hetzner, month to month</th></tr>
-  <tr><td>Machines for the scenarios</td><td class="n">6 × 128 GB at $352</td><td class="n">6 × 128 GB at $778</td><td class="n">3 × 256 GB at €844</td></tr>
+  <tr><td>Machines for the scenarios</td><td class="n">$2,112<small>6 × 128 GB</small></td><td class="n">$4,668<small>6 × 128 GB</small></td><td class="n">€2,532<small>3 × 256 GB</small></td></tr>
   <tr><td>Platform machine</td><td class="n">$530</td><td class="n">$1,167</td><td class="n">€614</td></tr>
-  <tr><td>Total a month</td><td class="n">$2,642</td><td class="n">$5,835</td><td class="n">€3,146 ($3,508)</td></tr>
+  <tr><td>Machines and platform, a month</td><td class="n">$2,642</td><td class="n">$5,835</td><td class="n">€3,146<small>$3,508</small></td></tr>
   <tr><td>A GB of memory a month</td><td class="n">$2.75</td><td class="n">$6.08</td><td class="n">$3.68</td></tr>
   <tr><td>Owed to stop after one month</td><td class="n">$95,112</td><td class="n">$5,835</td><td class="n">€3,146</td></tr>
 </table>
@@ -430,16 +447,6 @@
 </table>
 </div>
 
-<h2 id="shorten">What would shorten a run</h2>
-
-<p>Hardware sets how many scenarios run at once. Only the software sets how long a planner waits for one, and how much each keeps:</p>
-<ul>
-  <li>Make the traffic replay faster. It is about three quarters of a Tallinn round at 10%. The engine has a faster traffic simulator built for large cities, and whether Polycity's bike share, parking and transit additions run on it is the first test.</li>
-  <li>Carry a day across runs, saving residents' plans every 25 rounds so a run can continue where the last stopped.</li>
-  <li>Settle London's baseline once, and start every scenario from its settled plans for about 50 rounds.</li>
-  <li>Stop keeping the final events file, an exact copy of the last round's, which cuts a run's kept files by about a quarter.</li>
-</ul>
-
 <h2>Sources</h2>
 <ol class="sources">
   <li>The moment each round began, for the simulated days on the films stack, joined to each run's city, share of residents and run size.</li>
@@ -470,6 +477,7 @@
   <li>Sizes of every file kept by 32 Tallinn results written 24 to 28 Oct 2026, read from the result store on 28 Oct, among them two 10-round days at 1% and 10% kept after the change to keep only the first and last round's events.</li>
   <li>Amazon's London price lists for <a href="https://aws.amazon.com/s3/pricing/">file storage</a>, published 15 Oct 2026, and for <a href="https://aws.amazon.com/ebs/pricing/">working disks</a>, read on 28 Oct 2026.</li>
   <li>Hetzner's <a href="https://www.hetzner.com/storage/object-storage/">object storage</a> and <a href="https://www.hetzner.com/storage/storage-box/">storage box</a> pages, read on 28 Oct 2026.</li>
+  <li>Laudan, Heinrich and Nagel, <a href="https://svn.vsp.tu-berlin.de/repos/public-svn/publications/vspwp/2024/24-09/LaudanEtAl2024DistributedQsimRust.pdf">Distributed parallel Qsim implementation in Rust</a>, TU Berlin working paper 24-09, 2024; published as <a href="https://depositonce.tu-berlin.de/items/d9fb992d-7229-49a4-a910-501e0bdcb982/full">High-performance mobility simulation</a>, Information 16(2), 2025.</li>
 </ol>
 </main>
 </body>
