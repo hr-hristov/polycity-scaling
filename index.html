@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polycity's hardware and storage for London</title>
+<style>
+  :root { --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781; --grid: #e1e0d9; --surface: #fcfcfb; }
+  body { margin: 0; background: var(--surface); color: var(--ink); font: 16px/1.55 Georgia, "Times New Roman", serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 40px 20px 60px; }
+  h1 { font-size: 28px; line-height: 1.25; margin: 0 0 6px; }
+  .dateline { color: var(--muted); font: 13px/1.4 system-ui, sans-serif; margin: 0 0 28px; }
+  h2 { font-size: 19px; margin: 34px 0 8px; }
+  h3 { font-size: 16px; margin: 22px 0 6px; }
+  p { margin: 0 0 14px; }
+  figure { margin: 22px 0 26px; }
+  figcaption { color: var(--ink-2); font: 13px/1.45 system-ui, sans-serif; margin-top: 6px; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { font: 12px system-ui, sans-serif; fill: var(--ink-2); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+  svg .axis { fill: var(--muted); }
+  svg .limit { fill: var(--ink); font-weight: 600; }
+  figure svg circle:hover { stroke: var(--ink); }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  table { width: 100%; border-collapse: collapse; font: 14px/1.4 system-ui, sans-serif; margin: 8px 0 18px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th { color: var(--ink-2); font-weight: 600; }
+  td.n, th.n { text-align: right; white-space: nowrap; }
+  tr.group td { color: var(--ink-2); font-weight: 600; padding-top: 14px; }
+  .table-scroll { overflow-x: auto; }
+  ol.sources { font: 13px/1.5 system-ui, sans-serif; color: var(--ink-2); padding-left: 20px; }
+  .summary { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 2px 0 10px; margin: 0 0 30px; }
+  .summary h2 { margin-top: 14px; }
+  .summary h3 { margin: 18px 0 6px; }
+  .summary .lead { font-size: 18px; line-height: 1.5; }
+  .summary td.n, .summary th.n { white-space: normal; width: 22%; }
+  .why { color: var(--ink-2); }
+  table.wrap td.n, table.wrap th.n { white-space: normal; }
+  table.wrap td:first-child { min-width: 180px; }
+  @media (max-width: 600px) {
+    table { font-size: 12px; }
+    th, td { padding: 5px 4px; }
+    table.wrap td:first-child { min-width: 120px; }
+  }
+</style>
+</head>
+<body>
+<main>
+<h1>Polycity's hardware and storage for London</h1>
+<p class="dateline">Prepared 28 Oct 2026 from Polycity's own runs and result store, 185 city summary files, eight published studies, and Amazon's and Hetzner's price lists read the same day</p>
+
+<section class="summary" id="summary">
+<h2>Executive summary</h2>
+
+<p class="lead">One London run needs 8 cores and 112 GB at 10% of residents, 200 GB at 25%, and 616 to 930 GB with every resident. Six full London runs at once cost $7,870 to $29,171 a month on Amazon in London, by machine and way of paying. Hetzner's largest server holds 512 GB, so it carries 10% and 25% but not every resident. Each run also keeps 70 GB of results at 10% and 620 GB with every resident.</p>
+
+<h3>London at a glance</h3>
+
+<div class="table-scroll">
+<table>
+  <tr><th></th><th class="n">10% of residents</th><th class="n">25% of residents</th><th class="n">Every resident</th></tr>
+  <tr><td>One run needs</td><td class="n">8 cores, 112 GB</td><td class="n">8 cores, 200 GB</td><td class="n">8 cores, 616 GB, up to about 930 GB</td></tr>
+  <tr><td>Minutes a round</td><td class="n">65, likely 38 to 114</td><td class="n">97</td><td class="n">174, or 655 if time grows in step with residents</td></tr>
+  <tr><td>Hours for 50 rounds, a scenario started from a settled day</td><td class="n">57</td><td class="n">83</td><td class="n">147</td></tr>
+  <tr><td>Hours for 200 rounds</td><td class="n">220</td><td class="n">324</td><td class="n">583</td></tr>
+  <tr><td>Hours for 500 rounds, as Berlin's published model runs</td><td class="n">548</td><td class="n">808</td><td class="n">1,455</td></tr>
+  <tr><td>6 at once, a month, Amazon by the hour</td><td class="n">$5,834</td><td class="n">$10,368</td><td class="n">$24,537 to $29,171</td></tr>
+  <tr><td>6 at once, a month, Amazon 3-year commitment</td><td class="n">$2,640</td><td class="n">$3,482</td><td class="n">$7,870 to $13,190</td></tr>
+  <tr><td>6 at once, a month, Hetzner</td><td class="n">€1,547</td><td class="n">€2,161</td><td class="n">does not fit</td></tr>
+  <tr><td>Results kept by one run</td><td class="n">70 GB</td><td class="n">162 GB</td><td class="n">620 GB</td></tr>
+  <tr><td>Results after a year, 6 at once, 200 rounds</td><td class="n">17 TB</td><td class="n">26 TB</td><td class="n">56 TB</td></tr>
+  <tr><td>The same at 50 rounds</td><td class="n">65 TB</td><td class="n">103 TB</td><td class="n">221 TB</td></tr>
+  <tr><td>Storage bill in the 12th month, Amazon, 50 rounds</td><td class="n">$1,451</td><td class="n">$2,258</td><td class="n">$4,788</td></tr>
+  <tr><td>How sure</td><td class="n">Fitted, not measured</td><td class="n">Fitted, 2.5 times past the largest share measured</td><td class="n">Carried 10 times past any run made</td></tr>
+</table>
+</div>
+
+<h3>What it means</h3>
+<ul>
+  <li>No London figure is measured, because London has never been built in Polycity. Its figures come from a fit across 28 measured cities, and 8 in 10 of those sit within 1.74 times of it.</li>
+  <li>No Polycity run has settled yet. Published models of Switzerland and Berlin run 301 and 500 rounds, so 200 is the planning count and 500 the upper count.</li>
+  <li>Rounds change how long a machine is busy, never which machine a run needs.</li>
+  <li>A published test of this engine kept every main traffic figure at 25% of residents or more, and found 10% can stray.</li>
+  <li>The engine is one process, so one run is one machine. Kubernetes places whole runs on servers and never splits one.</li>
+  <li>Storage grows with every run kept. At every resident and 50 rounds, six at once add 18 TB a month. How long results are kept decides the storage bill.</li>
+  <li>A commitment is paid every hour of its term, whether the machine works or not.</li>
+</ul>
+
+<h3>Recommendation</h3>
+<ul>
+  <li>Commit to no hardware before the five runs in <a href="#tests">Tests before buying</a>. Two of them, Paris at 10% and 25%, are already sent to staging.</li>
+  <li>Rent by the hour for the London tests. Ten rounds of London at 5% cost about $11 on Amazon.</li>
+  <li>Decide how long a run's results are kept before choosing storage.</li>
+  <li>Choose between Amazon and Hetzner once the tests give London's own memory and hours.</li>
+</ul>
+</section>
+
+<p>Polycity has two parts that grow differently. The platform is 18 parts that run all the time, about 32 cores and 87 GB, and grows slowly with the number of planners. The simulated day grows with the city, the share of its residents simulated and the number of rounds. Every figure below is marked measured, fitted or assumed.</p>
+
+<h2 id="six">Six full London runs at once</h2>
+
+<p>Every resident simulated, six runs going all month, the platform included. Prices are Amazon's London list of 27 Oct, standard commitment paid monthly with nothing up front.</p>
+
+<div class="table-scroll">
+<table class="wrap">
+  <tr><th>Machines</th><th class="n">Holds 616 GB a run</th><th class="n">Holds 930 GB a run</th><th class="n">A month, by the hour</th><th class="n">A month, 3-year</th></tr>
+  <tr><td>Six Amazon r6a.24xlarge, 768 GB each, platform on its own machine</td><td class="n">yes</td><td class="n">no</td><td class="n">$29,171</td><td class="n">$13,190</td></tr>
+  <tr><td>Six Amazon x2iedn.8xlarge, 1,024 GB each, platform on its own machine</td><td class="n">yes</td><td class="n">yes</td><td class="n">$37,973</td><td class="n">$12,336</td></tr>
+  <tr><td>Two Amazon x2iedn.16xlarge in one Kubernetes cluster, 2,048 GB each, three runs on each and the platform on one</td><td class="n">yes</td><td class="n">no</td><td class="n">$24,537</td><td class="n">$7,870</td></tr>
+  <tr><td>Two Amazon x2iedn.24xlarge in one Kubernetes cluster, 3,072 GB each</td><td class="n">yes</td><td class="n">yes</td><td class="n">$36,805</td><td class="n">$11,806</td></tr>
+  <tr><td>Hetzner AX162, 512 GB at most</td><td class="n">no</td><td class="n">no</td><td class="n">does not fit</td><td class="n">does not fit</td></tr>
+</table>
+</div>
+
+<ul>
+  <li>Six runs of 200 rounds keep their machines about 24 days, and of 50 rounds about 6 days. If round time grows in step with residents, 200 rounds take about 91 days.</li>
+  <li>Three runs sharing one server is not measured. The engine's traffic replay is limited by memory speed, so runs on one server may slow each other. One failed server also stops three runs.</li>
+  <li>Paid only while running, six single runs cost $22,380 at 200 rounds and $5,652 at 50 rounds.</li>
+  <li>Hetzner carries six at once at 10% for €1,547 a month on two servers, and at 25% for €2,161 on three, plus €304 setup per server. Its servers stand in Germany and Finland only.</li>
+  <li>Storage comes on top: six working disks of 750 GB cost $386 a month on Amazon, and results kept grow as in <a href="#storage">Storage</a>.</li>
+</ul>
+
+<h2 id="storage">Storage</h2>
+
+<p>Each finished run keeps its files in the file store: the day's events, the residents' plans, noise, exhaust and the maps. Measured in the result store on 28 Oct, a Tallinn day of 10 rounds keeps 1.21 GB at 1% of residents and 4.07 GB at 10%. That is 68.6 KB for each resident simulated, on top of 0.89 GB that does not grow with residents.</p>
+
+<p>Most of it is the day's events, kept three times: after the first round, after the last, and as the final output. For London the part that does not grow with residents is taken as Tallinn's scaled by street pieces: 9.3 GB, assumed. While it runs, a run also needs working disk for its inputs and its files before they are sent, taken as 1.2 times what it keeps.</p>
+
+<div class="table-scroll">
+<table class="wrap">
+  <tr><th>London, 6 runs at once all month</th><th class="n">Kept per run</th><th class="n">Runs a month</th><th class="n">Added a month</th><th class="n">After a year</th><th class="n">12th month, Amazon</th><th class="n">12th month, Amazon, rarely read</th><th class="n">12th month, Hetzner</th></tr>
+  <tr class="group"><td colspan="8">10% of residents, working disk 90 GB a run</td></tr>
+  <tr><td>50 rounds</td><td class="n">70 GB</td><td class="n">77</td><td class="n">5.4 TB</td><td class="n">65 TB</td><td class="n">$1,451</td><td class="n">$797</td><td class="n">€415</td></tr>
+  <tr><td>200 rounds</td><td class="n">70 GB</td><td class="n">20</td><td class="n">1.4 TB</td><td class="n">17 TB</td><td class="n">$376</td><td class="n">$205</td><td class="n">€107</td></tr>
+  <tr class="group"><td colspan="8">25% of residents, working disk 200 GB a run</td></tr>
+  <tr><td>50 rounds</td><td class="n">162 GB</td><td class="n">53</td><td class="n">8.6 TB</td><td class="n">103 TB</td><td class="n">$2,258</td><td class="n">$1,257</td><td class="n">€654</td></tr>
+  <tr><td>200 rounds</td><td class="n">162 GB</td><td class="n">14</td><td class="n">2.2 TB</td><td class="n">26 TB</td><td class="n">$587</td><td class="n">$320</td><td class="n">€167</td></tr>
+  <tr class="group"><td colspan="8">Every resident, working disk 750 GB a run</td></tr>
+  <tr><td>50 rounds</td><td class="n">620 GB</td><td class="n">30</td><td class="n">18.4 TB</td><td class="n">221 TB</td><td class="n">$4,788</td><td class="n">$2,698</td><td class="n">€1,405</td></tr>
+  <tr><td>200 rounds</td><td class="n">620 GB</td><td class="n">7.5</td><td class="n">4.7 TB</td><td class="n">56 TB</td><td class="n">$1,248</td><td class="n">$682</td><td class="n">€355</td></tr>
+</table>
+</div>
+
+<ul>
+  <li>The bill grows every month while nothing is deleted. Over the whole first year, every resident at 50 rounds costs $31,354 on Amazon and €9,131 on Hetzner.</li>
+  <li>Keeping results for a fixed time caps the bill. Keeping three months at every resident and 50 rounds holds about 55 TB, $1,234 a month on Amazon.</li>
+  <li>Amazon's London store costs $0.024 a GB a month up to 50 TB and $0.023 above. Its rarely-read class costs $0.0131, plus $0.01 for each GB read back.</li>
+  <li>Hetzner's object storage costs €6.49 a month with 1 TB, then about €6.35 a TB a month, in Falkenstein, Nuremberg and Helsinki.</li>
+  <li>Working disk on Amazon costs $0.0928 a GB a month: $44 a month for six runs at 10%, $386 with every resident. Hetzner's AX162 comes with two 1.92 TB drives.</li>
+  <li>The databases are small beside the run files: the films stack's largest is about 1 GB, and a whole Tallinn workspace's prepared figures take 0.3 GB.</li>
+</ul>
+
+<h2 id="assumptions">Why these assumptions</h2>
+
+<p>Six assumptions carry every figure in this report. For each one, this section sets what Polycity's own runs show beside what published studies of the same engine found, and says what follows. Polycity's simulated day runs on MATSim, the open transport simulator every study below uses. Numbers in brackets point to Sources.</p>
+
+<h3>1. How many rounds a day needs to settle</h3>
+
+<p>A day has settled when one more round no longer changes the result. Published runs of this engine:</p>
+
+<div class="table-scroll">
+<table>
+  <tr><th>Model</th><th>Residents simulated</th><th class="n">Rounds</th><th>What the authors report</th></tr>
+  <tr><td>Sioux Falls test city [16]</td><td>1,682 to 168,220</td><td class="n">3,000 run, settled by 600 to 800</td><td>1% of residents changed plan each round. The settling round did not depend on the share simulated.</td></tr>
+  <tr><td>Switzerland, the national railway's model, 10% [19]</td><td>about 1 million</td><td class="n">301</td><td>83 hours on an Amazon machine of 32 cores and 256 GB</td></tr>
+  <tr><td>Berlin and Brandenburg, open model 6.4, 10% [18]</td><td>10% of the region</td><td class="n">500</td><td>45% of residents change plan at first, falling to 1%. Changes stop at 90% of rounds.</td></tr>
+  <tr><td>Munich [21], summary only</td><td>1% to 100%</td><td class="n">five counts tested</td><td>A later paper reports that smaller shares settled in far fewer rounds, against the Sioux Falls finding</td></tr>
+</table>
+</div>
+
+<p>Polycity's own runs: the store still holds the average score of every round for 20 finished runs of 10 to 20 rounds. None passes Polycity's own settling check, which asks the score to move less than 1% over the last tenth of rounds. Over their last three learning rounds the score still rose a median 2.5% a round.</p>
+
+<p>When plan changes stop, at 80% of rounds, the score jumps a median 74% in one round. Every resident then takes their best plan so far, instead of half of them trying a new one. So a short run's last score shows that switch, not a settled day.</p>
+
+<p>Polycity's setting differs from the published ones. Half of all residents try a new plan every round: a new route for a quarter, a new mode for an eighth and new times for an eighth. The other half takes its best plan. The engine's handbook warns that taking the best plan "tends to get stuck with sub-optimal plans" and advises it only beside random picking [17]. Polycity may therefore look settled sooner than it is.</p>
+
+<p class="why">What follows: no published model of a large region stops at 50 rounds. This report plans on 200 and prices 500 as the upper count. A scenario starts from the approved, settled day by default, so it is given 50, which no run has proven. The count changes hours and storage, never the size of a run's machine. A Tallinn day at 1% of 500 rounds settles the question for about 6 hours of rounds, because the Sioux Falls test found the settling round the same at every share.</p>
+
+<h3>2. Share of residents simulated</h3>
+
+<p>A review of 31 published studies found shares from 1% to 25%, 10% the most common, chosen for the hardware at hand [16]. Its own test city kept every main traffic figure at 25% or more. Between 10% and 25% some figures became unsteady, and at 10% or less they could stray far from the full city. The Munich study found travel times held down to 5% [21]. The review adds that buses and trains are harder to scale down than cars, because they keep fixed routes and timetables. Polycity runs buses, trams and trains.</p>
+
+<p class="why">What follows: 10% is the usual choice, not a proven one. London at 25% is priced beside 10% in the summary: 200 GB a run and 97 minutes a round.</p>
+
+<h3>3. Memory per resident and per street piece</h3>
+
+<p>Polycity's line, from 27 measured days up to Paris at 5%: 75 KB for each street piece up to 40 GB, plus 50 KB for each resident, plus a quarter and 4 GB for the machine around the engine. Two published runs test it:</p>
+
+<div class="table-scroll">
+<table>
+  <tr><th>Published run</th><th>Size</th><th class="n">Memory reported</th><th class="n">Polycity's line</th></tr>
+  <tr><td>An engine maker's run [22]</td><td>1 million residents, 250,000 street pieces</td><td class="n">60 to 90 GB</td><td class="n">69 GB engine, 90 GB machine</td></tr>
+  <tr><td>Switzerland at 10% [20]</td><td>about 1 million residents, 1.5 million street pieces</td><td class="n">130 GB</td><td class="n">90 GB engine, 117 GB machine</td></tr>
+</table>
+</div>
+
+<p>The engine maker's rule of thumb is about 100 KB a resident, Java's own overhead included [22]. London with every resident is 616 GB on Polycity's line and about 930 GB on that rule.</p>
+
+<p class="why">What follows: Polycity's line sits inside both published runs, and 10% below the Swiss one. A machine for every resident is sized between 616 and 930 GB, which is why <a href="#six">Six full London runs at once</a> says which machines hold each.</p>
+
+<h3>4. How round time grows with residents</h3>
+
+<p>Across 28 cities, Polycity's round time grows with residents to the power 0.43. Inside one city it is 0.31 for Tallinn from 1% to 10%, and 0.46 for Paris from 1% to 5%. Ten times the residents therefore cost two to three times the time where Polycity measured.</p>
+
+<p>Published runs grow faster at large shares. The Munich study found run time grew in step with residents [21]. The Swiss railway estimated 116 days for 1,000 rounds of all of Switzerland, about 167 minutes a round [20]. That is 19 times its 8¾ minutes of traffic replay at 10%.</p>
+
+<p class="why">What follows: the 0.43 power holds from 1% to 10%, and nothing shows it holds to 100%. If time grows in step with residents from 10%, London with every resident takes 655 minutes a round, not 174. The summary gives both.</p>
+
+<p>A check against the Swiss model: Polycity's fit gives 136 minutes a round for a city of its size. The Swiss model took 16.5 minutes a round on 32 cores [19]. Polycity's round is about 8 times slower for the same size, and the cause is not measured. Item one of <a href="#shorten">What would shorten a London run</a> is where that gap is closed.</p>
+
+<h3>5. Cores a run</h3>
+
+<p>Polycity gives a large run 8 cores. For Switzerland at 10%, the engine's traffic replay stopped getting faster past 8 threads, on any machine [19]. An earlier Zurich study found no gain from more cores at 100% and 25% [16]. Polycity cut a large city from 8 cores to 6 and lost only 2 to 17%. A spread-out version of the engine is reported 119 times faster, but it is a prototype outside the released engine [23].</p>
+
+<p class="why">What follows: more cores per run buy little speed. Hardware buys more runs at once, each on 8 cores.</p>
+
+<h3>6. The start of a run</h3>
+
+<p>Each run first reads the city, its residents and its timetables: 3 to 4 minutes for Tallinn and about an hour for a large European city, measured on Polycity. London's start and finish are taken as 2 hours, against 67 minutes measured for Paris. That is under 1% of a 200-round London run, so even double the time moves no total by more than 1%.</p>
+
+<h2>Every city: hours, memory and price</h2>
+
+<p>A run is a fixed start and finish, then rounds. The minutes a round are measured for 28 pairs of city and share of residents. Fitted to those, a round grows almost one for one with street pieces, the stretches of road the engine moves traffic along, and with residents to the power 0.43. A measured city keeps its own round, scaled only by its share. London has no measurement, so London is the fit, with as many street pieces as Paris.</p>
+
+<figure>
+<svg viewBox="0 0 720 520" role="img" aria-label="Measured minutes a round against the fitted minutes, for 29 city and share pairs, with London's fitted range">
+<polygon points="64.0,421.2 634.5,24.0 696.0,24.0 696.0,66.8 125.5,464.0 64.0,464.0" fill="#cde2fb" opacity="0.55"/>
+<line x1="64.0" y1="24" x2="64.0" y2="464" stroke="#e1e0d9"/><line x1="64" y1="464.0" x2="696" y2="464.0" stroke="#e1e0d9"/>
+<text class="axis" x="64.0" y="482" text-anchor="middle">0.5</text><text class="axis" x="56" y="468.0" text-anchor="end">0.5</text>
+<line x1="140.8" y1="24" x2="140.8" y2="464" stroke="#e1e0d9"/><line x1="64" y1="410.5" x2="696" y2="410.5" stroke="#e1e0d9"/>
+<text class="axis" x="140.8" y="482" text-anchor="middle">1</text><text class="axis" x="56" y="414.5" text-anchor="end">1</text>
+<line x1="217.6" y1="24" x2="217.6" y2="464" stroke="#e1e0d9"/><line x1="64" y1="357.1" x2="696" y2="357.1" stroke="#e1e0d9"/>
+<text class="axis" x="217.6" y="482" text-anchor="middle">2</text><text class="axis" x="56" y="361.1" text-anchor="end">2</text>
+<line x1="319.1" y1="24" x2="319.1" y2="464" stroke="#e1e0d9"/><line x1="64" y1="286.4" x2="696" y2="286.4" stroke="#e1e0d9"/>
+<text class="axis" x="319.1" y="482" text-anchor="middle">5</text><text class="axis" x="56" y="290.4" text-anchor="end">5</text>
+<line x1="395.9" y1="24" x2="395.9" y2="464" stroke="#e1e0d9"/><line x1="64" y1="232.9" x2="696" y2="232.9" stroke="#e1e0d9"/>
+<text class="axis" x="395.9" y="482" text-anchor="middle">10</text><text class="axis" x="56" y="236.9" text-anchor="end">10</text>
+<line x1="472.7" y1="24" x2="472.7" y2="464" stroke="#e1e0d9"/><line x1="64" y1="179.4" x2="696" y2="179.4" stroke="#e1e0d9"/>
+<text class="axis" x="472.7" y="482" text-anchor="middle">20</text><text class="axis" x="56" y="183.4" text-anchor="end">20</text>
+<line x1="574.3" y1="24" x2="574.3" y2="464" stroke="#e1e0d9"/><line x1="64" y1="108.7" x2="696" y2="108.7" stroke="#e1e0d9"/>
+<text class="axis" x="574.3" y="482" text-anchor="middle">50</text><text class="axis" x="56" y="112.7" text-anchor="end">50</text>
+<line x1="651.1" y1="24" x2="651.1" y2="464" stroke="#e1e0d9"/><line x1="64" y1="55.3" x2="696" y2="55.3" stroke="#e1e0d9"/>
+<text class="axis" x="651.1" y="482" text-anchor="middle">100</text><text class="axis" x="56" y="59.3" text-anchor="end">100</text>
+<line x1="64.0" y1="464.0" x2="696.0" y2="24.0" stroke="#52514e" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text class="axis" x="380.0" y="506" text-anchor="middle">minutes a round the fit predicts</text>
+<text class="axis" transform="translate(16 244.0) rotate(-90)" text-anchor="middle">minutes a round measured</text>
+<circle cx="109.0" cy="438.0" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Tallinn at 1% of residents: measured 0.7 min, fit 0.8 min</title></circle>
+<circle cx="156.4" cy="411.8" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Palma at 5% of residents: measured 1.0 min, fit 1.2 min</title></circle>
+<circle cx="184.9" cy="404.4" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Tallinn at 5% of residents: measured 1.1 min, fit 1.5 min</title></circle>
+<circle cx="217.6" cy="383.7" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Tallinn at 10% of residents: measured 1.4 min, fit 2.0 min</title></circle>
+<text x="226.6" y="387.7">Tallinn</text>
+<circle cx="199.3" cy="367.4" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Vilnius at 5% of residents: measured 1.8 min, fit 1.7 min</title></circle>
+<circle cx="328.3" cy="339.8" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Lisbon at 5% of residents: measured 2.5 min, fit 5.4 min</title></circle>
+<text x="337.3" y="343.8">Lisbon</text>
+<circle cx="319.2" cy="317.1" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Kraków at 5% of residents: measured 3.4 min, fit 5.0 min</title></circle>
+<circle cx="236.6" cy="310.7" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Sofia at 1% of residents: measured 3.6 min, fit 2.4 min</title></circle>
+<circle cx="337.3" cy="308.6" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Manchester at 5% of residents: measured 3.8 min, fit 5.9 min</title></circle>
+<circle cx="375.4" cy="288.3" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Lyon at 5% of residents: measured 4.9 min, fit 8.3 min</title></circle>
+<circle cx="311.0" cy="275.6" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Toulouse at 5% of residents: measured 5.8 min, fit 4.6 min</title></circle>
+<circle cx="347.4" cy="272.3" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Birmingham at 5% of residents: measured 6.0 min, fit 6.5 min</title></circle>
+<circle cx="374.9" cy="271.7" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Brussels at 5% of residents: measured 6.0 min, fit 8.3 min</title></circle>
+<circle cx="384.7" cy="263.4" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Vienna at 5% of residents: measured 6.7 min, fit 9.0 min</title></circle>
+<circle cx="356.7" cy="261.8" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Barcelona at 5% of residents: measured 6.9 min, fit 7.0 min</title></circle>
+<circle cx="381.2" cy="252.4" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Turin at 5% of residents: measured 7.8 min, fit 8.8 min</title></circle>
+<circle cx="429.8" cy="236.3" r="6" fill="#e87ba4" stroke="#fcfcfb" stroke-width="2"><title>Paris at 1% of residents: measured 9.6 min, fit 13.6 min</title></circle>
+<circle cx="345.2" cy="225.4" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Amsterdam at 5% of residents: measured 11.0 min, fit 6.3 min</title></circle>
+<circle cx="422.0" cy="217.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Rotterdam and The Hague at 5% of residents: measured 12.3 min, fit 12.6 min</title></circle>
+<circle cx="393.7" cy="217.0" r="6" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"><title>Budapest at 5% of residents: measured 12.3 min, fit 9.8 min</title></circle>
+<circle cx="418.1" cy="212.7" r="6" fill="#eda100" stroke="#fcfcfb" stroke-width="2"><title>Madrid at 5% of residents: measured 13.0 min, fit 12.2 min</title></circle>
+<text x="427.1" y="216.7">Madrid</text>
+<circle cx="374.7" cy="203.0" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Stockholm at 5% of residents: measured 14.7 min, fit 8.3 min</title></circle>
+<circle cx="493.2" cy="197.9" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Copenhagen at 5% of residents: measured 15.8 min, fit 24.1 min</title></circle>
+<text x="502.2" y="201.9">Copenhagen</text>
+<circle cx="490.0" cy="196.1" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Prague at 3% of residents: measured 16.1 min, fit 23.4 min</title></circle>
+<circle cx="505.7" cy="178.9" r="6" fill="#e87ba4" stroke="#fcfcfb" stroke-width="2"><title>Paris at 5% of residents: measured 20.1 min, fit 26.9 min</title></circle>
+<text x="514.7" y="182.9">Paris</text>
+<circle cx="327.2" cy="177.6" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Oslo at 5% of residents: measured 20.5 min, fit 5.4 min</title></circle>
+<text x="336.2" y="181.6">Oslo</text>
+<circle cx="351.2" cy="168.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Helsinki at 5% of residents: measured 23.1 min, fit 6.7 min</title></circle>
+<text x="360.2" y="172.2">Helsinki</text>
+<circle cx="514.2" cy="99.7" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Prague at 5% of residents: measured 56.2 min, fit 29.1 min</title></circle>
+<text x="523.2" y="103.7">Prague</text>
+<circle cx="365.1" cy="49.4" r="6" fill="none" stroke="#2a78d6" stroke-width="2"><title>Warsaw at 2% of residents: measured 108.0 min, fit 7.6 min, left out of the fit</title></circle>
+<text x="374.1" y="53.4">Warsaw (left out)</text>
+<line x1="604.2" y1="130.7" x2="604.2" y2="45.1" stroke="#008300" stroke-width="3" stroke-linecap="round"><title>London at 10%: fitted 65 min, 8 cities in 10 would measure 38 to 114 min</title></line>
+<circle cx="604.2" cy="87.9" r="7" fill="#fcfcfb" stroke="#008300" stroke-width="3"/>
+<text class="limit" x="616" y="84">London 10%</text>
+<text class="limit" x="616" y="100">38 to 114</text>
+<text class="axis" x="84.2" y="397.1">shaded: within 1.74 times of the fit</text>
+</svg>
+<figcaption>Each dot is one city at one share of residents, measured on Polycity's own runs. On the dashed line the fit is exact. London has no dot, only the range a London measurement would most likely fall in. Point at a dot for its figures.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 720 440" role="img" aria-label="Hours for one scenario of 50 rounds by share of residents, up to every resident, for six cities">
+<rect x="323.0" y="24" width="267.0" height="366" fill="#f3f2ee"><title>No city has been run above 10% of its residents</title></rect>
+<line x1="56" y1="390.0" x2="590" y2="390.0" stroke="#e1e0d9"/><text class="axis" x="48" y="394.0" text-anchor="end">0</text>
+<line x1="56" y1="344.2" x2="590" y2="344.2" stroke="#e1e0d9"/><text class="axis" x="48" y="348.2" text-anchor="end">20</text>
+<line x1="56" y1="298.5" x2="590" y2="298.5" stroke="#e1e0d9"/><text class="axis" x="48" y="302.5" text-anchor="end">40</text>
+<line x1="56" y1="252.8" x2="590" y2="252.8" stroke="#e1e0d9"/><text class="axis" x="48" y="256.8" text-anchor="end">60</text>
+<line x1="56" y1="207.0" x2="590" y2="207.0" stroke="#e1e0d9"/><text class="axis" x="48" y="211.0" text-anchor="end">80</text>
+<line x1="56" y1="161.2" x2="590" y2="161.2" stroke="#e1e0d9"/><text class="axis" x="48" y="165.2" text-anchor="end">100</text>
+<line x1="56" y1="115.5" x2="590" y2="115.5" stroke="#e1e0d9"/><text class="axis" x="48" y="119.5" text-anchor="end">120</text>
+<line x1="56" y1="69.8" x2="590" y2="69.8" stroke="#e1e0d9"/><text class="axis" x="48" y="73.8" text-anchor="end">140</text>
+<line x1="56" y1="24.0" x2="590" y2="24.0" stroke="#e1e0d9"/><text class="axis" x="48" y="28.0" text-anchor="end">160</text>
+<text class="axis" x="56.0" y="410" text-anchor="middle">1%</text>
+<text class="axis" x="242.6" y="410" text-anchor="middle">5%</text>
+<text class="axis" x="323.0" y="410" text-anchor="middle">10%</text>
+<text class="axis" x="429.2" y="410" text-anchor="middle">25%</text>
+<text class="axis" x="590.0" y="410" text-anchor="middle">100%</text>
+<text class="axis" x="323.0" y="428" text-anchor="middle">share of residents simulated</text>
+<text class="axis" transform="translate(14 207.0) rotate(-90)" text-anchor="middle">hours</text>
+<polyline points="56.0,388.7 242.6,387.7 323.0,387.0 429.2,385.7 590.0,382.5" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+<circle cx="56.0" cy="388.7" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Tallinn at 1%: 0.6 hours for 50 rounds</title></circle>
+<circle cx="242.6" cy="387.7" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Tallinn at 5%: 1.0 hours for 50 rounds</title></circle>
+<circle cx="323.0" cy="387.0" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Tallinn at 10%: 1.3 hours for 50 rounds</title></circle>
+<circle cx="429.2" cy="385.7" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Tallinn at 25%: 1.9 hours for 50 rounds</title></circle>
+<circle cx="590.0" cy="382.5" r="5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Tallinn at 100%: 3.3 hours for 50 rounds</title></circle>
+<polyline points="56.0,384.2 242.6,381.0 323.0,378.8 429.2,374.7 590.0,364.5" fill="none" stroke="#eb6834" stroke-width="2.5"/>
+<circle cx="56.0" cy="384.2" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Kraków at 1%: 2.5 hours for 50 rounds</title></circle>
+<circle cx="242.6" cy="381.0" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Kraków at 5%: 3.9 hours for 50 rounds</title></circle>
+<circle cx="323.0" cy="378.8" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Kraków at 10%: 4.9 hours for 50 rounds</title></circle>
+<circle cx="429.2" cy="374.7" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Kraków at 25%: 6.7 hours for 50 rounds</title></circle>
+<circle cx="590.0" cy="364.5" r="5" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Kraków at 100%: 11.2 hours for 50 rounds</title></circle>
+<polyline points="56.0,375.6 242.6,364.0 323.0,356.0 429.2,341.0 590.0,303.7" fill="none" stroke="#1baf7a" stroke-width="2.5"/>
+<circle cx="56.0" cy="375.6" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"><title>Budapest at 1%: 6.3 hours for 50 rounds</title></circle>
+<circle cx="242.6" cy="364.0" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"><title>Budapest at 5%: 11.4 hours for 50 rounds</title></circle>
+<circle cx="323.0" cy="356.0" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"><title>Budapest at 10%: 14.9 hours for 50 rounds</title></circle>
+<circle cx="429.2" cy="341.0" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"><title>Budapest at 25%: 21.4 hours for 50 rounds</title></circle>
+<circle cx="590.0" cy="303.7" r="5" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"><title>Budapest at 100%: 37.7 hours for 50 rounds</title></circle>
+<polyline points="56.0,374.9 242.6,362.7 323.0,354.2 429.2,338.3 590.0,298.8" fill="none" stroke="#eda100" stroke-width="2.5"/>
+<circle cx="56.0" cy="374.9" r="5" fill="#eda100" stroke="#fcfcfb" stroke-width="2"><title>Madrid at 1%: 6.6 hours for 50 rounds</title></circle>
+<circle cx="242.6" cy="362.7" r="5" fill="#eda100" stroke="#fcfcfb" stroke-width="2"><title>Madrid at 5%: 11.9 hours for 50 rounds</title></circle>
+<circle cx="323.0" cy="354.2" r="5" fill="#eda100" stroke="#fcfcfb" stroke-width="2"><title>Madrid at 10%: 15.7 hours for 50 rounds</title></circle>
+<circle cx="429.2" cy="338.3" r="5" fill="#eda100" stroke="#fcfcfb" stroke-width="2"><title>Madrid at 25%: 22.6 hours for 50 rounds</title></circle>
+<circle cx="590.0" cy="298.8" r="5" fill="#eda100" stroke="#fcfcfb" stroke-width="2"><title>Madrid at 100%: 39.9 hours for 50 rounds</title></circle>
+<polyline points="56.0,368.1 242.6,349.1 323.0,335.9 429.2,311.3 590.0,250.2" fill="none" stroke="#e87ba4" stroke-width="2.5"/>
+<circle cx="56.0" cy="368.1" r="5" fill="#e87ba4" stroke="#fcfcfb" stroke-width="2"><title>Paris at 1%: 9.6 hours for 50 rounds</title></circle>
+<circle cx="242.6" cy="349.1" r="5" fill="#e87ba4" stroke="#fcfcfb" stroke-width="2"><title>Paris at 5%: 17.9 hours for 50 rounds</title></circle>
+<circle cx="323.0" cy="335.9" r="5" fill="#e87ba4" stroke="#fcfcfb" stroke-width="2"><title>Paris at 10%: 23.6 hours for 50 rounds</title></circle>
+<circle cx="429.2" cy="311.3" r="5" fill="#e87ba4" stroke="#fcfcfb" stroke-width="2"><title>Paris at 25%: 34.4 hours for 50 rounds</title></circle>
+<circle cx="590.0" cy="250.2" r="5" fill="#e87ba4" stroke="#fcfcfb" stroke-width="2"><title>Paris at 100%: 61.1 hours for 50 rounds</title></circle>
+<polyline points="56.0,338.6 242.6,292.5 323.0,260.6 429.2,201.1 590.0,53.0" fill="none" stroke="#008300" stroke-width="2.5" stroke-dasharray="7 5"/>
+<circle cx="56.0" cy="338.6" r="5" fill="#008300" stroke="#fcfcfb" stroke-width="2"><title>London at 1%: 22.5 hours for 50 rounds</title></circle>
+<circle cx="242.6" cy="292.5" r="5" fill="#008300" stroke="#fcfcfb" stroke-width="2"><title>London at 5%: 42.6 hours for 50 rounds</title></circle>
+<circle cx="323.0" cy="260.6" r="5" fill="#008300" stroke="#fcfcfb" stroke-width="2"><title>London at 10%: 56.6 hours for 50 rounds</title></circle>
+<circle cx="429.2" cy="201.1" r="5" fill="#008300" stroke="#fcfcfb" stroke-width="2"><title>London at 25%: 82.6 hours for 50 rounds</title></circle>
+<circle cx="590.0" cy="53.0" r="5" fill="#008300" stroke="#fcfcfb" stroke-width="2"><title>London at 100%: 147.3 hours for 50 rounds</title></circle>
+<text x="602" y="57.0">London (fit) 147 h</text>
+<text x="602" y="254.2">Paris 61 h</text>
+<text x="602" y="302.8">Madrid 40 h</text>
+<text x="602" y="317.8">Budapest 38 h</text>
+<text x="602" y="368.5">Kraków 11 h</text>
+<text x="602" y="386.4">Tallinn 3 h</text>
+</svg>
+<figcaption>Hours for one scenario of 50 rounds on 8 cores, or 4 for Tallinn, start and finish included. London is dashed because it is fitted, not measured. The grey band lies beyond any run made: no city has been run above 10% of its residents.</figcaption>
+</figure>
+
+<p>Memory grows with the street network more than with residents. The sizing takes 75 KB for each street piece, stopping at 40 GB, plus 50 KB for each resident simulated. Every reading sits under that line.</p>
+
+<figure>
+<svg viewBox="0 0 720 340" role="img" aria-label="Highest engine memory read from running simulated days, against the memory line the sizing uses">
+<line x1="210" y1="14" x2="210" y2="28" stroke="#0b0b0b" stroke-width="2.5"/><text class="axis" x="218" y="25">the memory line the sizing uses</text>
+<line x1="210.0" y1="40" x2="210.0" y2="294" stroke="#e1e0d9"/><text class="axis" x="210.0" y="312" text-anchor="middle">0</text>
+<line x1="304.0" y1="40" x2="304.0" y2="294" stroke="#e1e0d9"/><text class="axis" x="304.0" y="312" text-anchor="middle">10</text>
+<line x1="398.0" y1="40" x2="398.0" y2="294" stroke="#e1e0d9"/><text class="axis" x="398.0" y="312" text-anchor="middle">20</text>
+<line x1="492.0" y1="40" x2="492.0" y2="294" stroke="#e1e0d9"/><text class="axis" x="492.0" y="312" text-anchor="middle">30</text>
+<line x1="586.0" y1="40" x2="586.0" y2="294" stroke="#e1e0d9"/><text class="axis" x="586.0" y="312" text-anchor="middle">40</text>
+<line x1="680.0" y1="40" x2="680.0" y2="294" stroke="#e1e0d9"/><text class="axis" x="680.0" y="312" text-anchor="middle">50</text>
+<text class="axis" x="445.0" y="332" text-anchor="middle">GB of engine memory in use, highest reading</text>
+<text x="200" y="65.2" text-anchor="end">Tallinn 1%</text>
+<rect x="210" y="46.0" width="47.2" height="30.3" rx="4" fill="#2a78d6"><title>Tallinn 1%: highest reading 5.0 GB across 8 days</title></rect>
+<line x1="261.3" y1="43.0" x2="261.3" y2="79.3" stroke="#0b0b0b" stroke-width="2.5"><title>Tallinn 1%: the memory line gives 5.5 GB</title></line>
+<text x="271.3" y="65.2">5.0</text>
+<text x="200" y="107.5" text-anchor="end">Tallinn 10%</text>
+<rect x="210" y="88.3" width="60.7" height="30.3" rx="4" fill="#2a78d6"><title>Tallinn 10%: highest reading 6.5 GB across 9 days</title></rect>
+<line x1="280.9" y1="85.3" x2="280.9" y2="121.7" stroke="#0b0b0b" stroke-width="2.5"><title>Tallinn 10%: the memory line gives 7.5 GB</title></line>
+<text x="290.9" y="107.5">6.5</text>
+<text x="200" y="149.8" text-anchor="end">Amsterdam 5%</text>
+<rect x="210" y="130.7" width="54.9" height="30.3" rx="4" fill="#2a78d6"><title>Amsterdam 5%: highest reading 5.8 GB on 1 day</title></rect>
+<text x="274.9" y="149.8">5.8</text>
+<text x="200" y="192.2" text-anchor="end">Sofia 1%</text>
+<rect x="210" y="173.0" width="106.0" height="30.3" rx="4" fill="#2a78d6"><title>Sofia 1%: highest reading 11.3 GB on 1 day</title></rect>
+<line x1="322.3" y1="170.0" x2="322.3" y2="206.3" stroke="#0b0b0b" stroke-width="2.5"><title>Sofia 1%: the memory line gives 11.9 GB</title></line>
+<text x="332.3" y="192.2">11.3</text>
+<text x="200" y="234.5" text-anchor="end">Bulgaria, whole country, 0.05%</text>
+<rect x="210" y="215.3" width="88.5" height="30.3" rx="4" fill="#2a78d6"><title>Bulgaria, whole country, 0.05%: highest reading 9.4 GB across 6 days</title></rect>
+<text x="308.5" y="234.5">9.4</text>
+<text x="200" y="276.8" text-anchor="end">Paris 5%</text>
+<rect x="210" y="257.7" width="376.0" height="30.3" rx="4" fill="none" stroke="#e87ba4" stroke-width="2" stroke-dasharray="5 4"><title>Paris at 5%: five rounds finished inside 40 GB of engine memory; its readings were not kept</title></rect>
+<text x="220" y="276.8">5 rounds finished inside 40, readings not kept</text>
+<line x1="637.8" y1="254.7" x2="637.8" y2="291.0" stroke="#0b0b0b" stroke-width="2.5"><title>Paris 5%: the memory line gives 45.5 GB</title></line>
+</svg>
+<figcaption>Measured: the highest engine memory read from the engine's own log in 27 running days on 27 and 28 Oct, and the Paris days of 14 and 16 Oct that finished all five rounds inside 40 GB. The black mark is what the sizing allows.</figcaption>
+</figure>
+
+<div class="table-scroll">
+<table>
+  <tr><th>Share of residents</th><th class="n">Residents simulated</th><th class="n">One run needs</th><th class="n">Minutes a round</th><th class="n">Hours, 50 rounds</th><th class="n">Hours, 200 rounds</th><th class="n">200 rounds, by the hour</th><th class="n">A month, 3-year</th><th class="n">A month, Hetzner</th></tr>
+  <tr class="group"><td colspan="9">Tallinn, measured at 1%, 5% and 10%</td></tr>
+  <tr><td>1%</td><td class="n">4,637</td><td class="n">4 cores, 16 GB</td><td class="n">0.5</td><td class="n">0.6</td><td class="n">1.9</td><td class="n">$0.38</td><td class="n">$66</td><td class="n">€51</td></tr>
+  <tr><td>5%</td><td class="n">23,185</td><td class="n">4 cores, 16 GB</td><td class="n">1.1</td><td class="n">1.0</td><td class="n">3.6</td><td class="n">$0.73</td><td class="n">$66</td><td class="n">€51</td></tr>
+  <tr><td>10%</td><td class="n">46,370</td><td class="n">4 cores, 16 GB</td><td class="n">1.4</td><td class="n">1.3</td><td class="n">4.9</td><td class="n">$0.97</td><td class="n">$66</td><td class="n">€51</td></tr>
+  <tr><td>25%</td><td class="n">115,925</td><td class="n">4 cores, 24 GB</td><td class="n">2.1</td><td class="n">1.9</td><td class="n">7.1</td><td class="n">$1.89</td><td class="n">$88</td><td class="n">€51</td></tr>
+  <tr><td>100%</td><td class="n">463,700</td><td class="n">4 cores, 40 GB</td><td class="n">3.8</td><td class="n">3.3</td><td class="n">13</td><td class="n">$6.77</td><td class="n">$176</td><td class="n">€51</td></tr>
+  <tr class="group"><td colspan="9">Kraków, measured at 5%</td></tr>
+  <tr><td>1%</td><td class="n">7,854</td><td class="n">8 cores, 24 GB</td><td class="n">1.7</td><td class="n">2.5</td><td class="n">6.8</td><td class="n">$2.71</td><td class="n">$133</td><td class="n">€102</td></tr>
+  <tr><td>5%</td><td class="n">39,268</td><td class="n">8 cores, 32 GB</td><td class="n">3.4</td><td class="n">3.9</td><td class="n">12</td><td class="n">$4.93</td><td class="n">$133</td><td class="n">€102</td></tr>
+  <tr><td>10%</td><td class="n">78,536</td><td class="n">8 cores, 32 GB</td><td class="n">4.5</td><td class="n">4.9</td><td class="n">16</td><td class="n">$6.47</td><td class="n">$133</td><td class="n">€102</td></tr>
+  <tr><td>25%</td><td class="n">196,340</td><td class="n">8 cores, 40 GB</td><td class="n">6.7</td><td class="n">6.7</td><td class="n">23</td><td class="n">$12</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>100%</td><td class="n">785,360</td><td class="n">8 cores, 72 GB</td><td class="n">12</td><td class="n">11</td><td class="n">41</td><td class="n">$44</td><td class="n">$352</td><td class="n">€102</td></tr>
+  <tr class="group"><td colspan="9">Budapest, measured at 5%</td></tr>
+  <tr><td>1%</td><td class="n">16,684</td><td class="n">8 cores, 32 GB</td><td class="n">6.2</td><td class="n">6.3</td><td class="n">22</td><td class="n">$8.70</td><td class="n">$133</td><td class="n">€102</td></tr>
+  <tr><td>5%</td><td class="n">83,419</td><td class="n">8 cores, 40 GB</td><td class="n">12</td><td class="n">11</td><td class="n">42</td><td class="n">$22</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>10%</td><td class="n">166,838</td><td class="n">8 cores, 48 GB</td><td class="n">16</td><td class="n">15</td><td class="n">56</td><td class="n">$30</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>25%</td><td class="n">417,095</td><td class="n">8 cores, 64 GB</td><td class="n">24</td><td class="n">21</td><td class="n">82</td><td class="n">$44</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>100%</td><td class="n">1,668,380</td><td class="n">8 cores, 136 GB</td><td class="n">44</td><td class="n">38</td><td class="n">148</td><td class="n">$310</td><td class="n">$492</td><td class="n">€205</td></tr>
+  <tr class="group"><td colspan="9">Madrid, measured at 5%</td></tr>
+  <tr><td>1%</td><td class="n">32,536</td><td class="n">8 cores, 32 GB</td><td class="n">6.6</td><td class="n">6.6</td><td class="n">23</td><td class="n">$9.18</td><td class="n">$133</td><td class="n">€102</td></tr>
+  <tr><td>5%</td><td class="n">162,681</td><td class="n">8 cores, 40 GB</td><td class="n">13</td><td class="n">12</td><td class="n">44</td><td class="n">$24</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>10%</td><td class="n">325,362</td><td class="n">8 cores, 56 GB</td><td class="n">17</td><td class="n">16</td><td class="n">59</td><td class="n">$32</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>25%</td><td class="n">813,405</td><td class="n">8 cores, 80 GB</td><td class="n">26</td><td class="n">23</td><td class="n">87</td><td class="n">$93</td><td class="n">$352</td><td class="n">€102</td></tr>
+  <tr><td>100%</td><td class="n">3,253,620</td><td class="n">8 cores, 240 GB</td><td class="n">46</td><td class="n">40</td><td class="n">156</td><td class="n">$328</td><td class="n">$492</td><td class="n">€307</td></tr>
+  <tr class="group"><td colspan="9">Paris, measured at 1% and 5%</td></tr>
+  <tr><td>1%</td><td class="n">22,059</td><td class="n">8 cores, 56 GB</td><td class="n">10</td><td class="n">9.6</td><td class="n">35</td><td class="n">$19</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>5%</td><td class="n">110,293</td><td class="n">8 cores, 64 GB</td><td class="n">20</td><td class="n">18</td><td class="n">68</td><td class="n">$36</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>10%</td><td class="n">220,586</td><td class="n">8 cores, 72 GB</td><td class="n">27</td><td class="n">24</td><td class="n">91</td><td class="n">$97</td><td class="n">$352</td><td class="n">€102</td></tr>
+  <tr><td>25%</td><td class="n">551,465</td><td class="n">8 cores, 96 GB</td><td class="n">40</td><td class="n">34</td><td class="n">134</td><td class="n">$143</td><td class="n">$352</td><td class="n">€123</td></tr>
+  <tr><td>100%</td><td class="n">2,205,860</td><td class="n">8 cores, 192 GB</td><td class="n">72</td><td class="n">61</td><td class="n">241</td><td class="n">$507</td><td class="n">$492</td><td class="n">€307</td></tr>
+  <tr class="group"><td colspan="9">London, fitted</td></tr>
+  <tr><td>1%</td><td class="n">89,000</td><td class="n">8 cores, 64 GB</td><td class="n">25</td><td class="n">22</td><td class="n">84</td><td class="n">$45</td><td class="n">$176</td><td class="n">€102</td></tr>
+  <tr><td>5%</td><td class="n">445,000</td><td class="n">8 cores, 88 GB</td><td class="n">49</td><td class="n">43</td><td class="n">165</td><td class="n">$175</td><td class="n">$352</td><td class="n">€123</td></tr>
+  <tr><td>10%</td><td class="n">890,000</td><td class="n">8 cores, 112 GB</td><td class="n">65</td><td class="n">57</td><td class="n">220</td><td class="n">$235</td><td class="n">$352</td><td class="n">€154</td></tr>
+  <tr><td>25%</td><td class="n">2,225,000</td><td class="n">8 cores, 200 GB</td><td class="n">97</td><td class="n">83</td><td class="n">324</td><td class="n">$681</td><td class="n">$492</td><td class="n">€307</td></tr>
+  <tr><td>100%</td><td class="n">8,900,000</td><td class="n">8 cores, 616 GB</td><td class="n">174</td><td class="n">147</td><td class="n">583</td><td class="n">$3,730</td><td class="n">$2,110</td><td class="n">does not fit</td></tr>
+</table>
+</div>
+
+<p>The month columns keep one run busy all 730 hours of a month on the cheapest Amazon machine that holds it, without the platform. A Hetzner month is the run's share of one 48-core, 512 GB server.</p>
+
+<h3>Three and six runs at once, platform included</h3>
+
+<div class="table-scroll">
+<table>
+  <tr><th>City and share</th><th class="n">3 at once, by the hour</th><th class="n">3 at once, 3-year</th><th class="n">3 at once, Hetzner</th><th class="n">6 at once, by the hour</th><th class="n">6 at once, 3-year</th><th class="n">6 at once, Hetzner</th></tr>
+  <tr><td>Tallinn 10%</td><td class="n">$1,604</td><td class="n">$729</td><td class="n">€933</td><td class="n">$2,042</td><td class="n">$928</td><td class="n">€933</td></tr>
+  <tr><td>Tallinn 100%</td><td class="n">$2,334</td><td class="n">$1,058</td><td class="n">€933</td><td class="n">$3,500</td><td class="n">$1,586</td><td class="n">€933</td></tr>
+  <tr><td>Kraków 10%</td><td class="n">$2,042</td><td class="n">$928</td><td class="n">€933</td><td class="n">$2,917</td><td class="n">$1,326</td><td class="n">€933</td></tr>
+  <tr><td>Kraków 100%</td><td class="n">$3,500</td><td class="n">$1,585</td><td class="n">€933</td><td class="n">$5,834</td><td class="n">$2,640</td><td class="n">€933</td></tr>
+  <tr><td>Madrid 10%</td><td class="n">$2,334</td><td class="n">$1,058</td><td class="n">€933</td><td class="n">$3,500</td><td class="n">$1,586</td><td class="n">€933</td></tr>
+  <tr><td>Madrid 100%</td><td class="n">$5,767</td><td class="n">$2,006</td><td class="n">€1,547</td><td class="n">$10,368</td><td class="n">$3,482</td><td class="n">€2,161</td></tr>
+  <tr><td>Paris 10%</td><td class="n">$3,500</td><td class="n">$1,585</td><td class="n">€933</td><td class="n">$5,834</td><td class="n">$2,640</td><td class="n">€933</td></tr>
+  <tr><td>Paris 25%</td><td class="n">$3,500</td><td class="n">$1,585</td><td class="n">€933</td><td class="n">$5,834</td><td class="n">$2,640</td><td class="n">€1,547</td></tr>
+  <tr><td>Paris 100%</td><td class="n">$5,767</td><td class="n">$2,006</td><td class="n">€1,547</td><td class="n">$10,368</td><td class="n">$3,482</td><td class="n">€2,161</td></tr>
+  <tr><td>London 5%</td><td class="n">$3,500</td><td class="n">$1,585</td><td class="n">€933</td><td class="n">$5,834</td><td class="n">$2,640</td><td class="n">€1,547</td></tr>
+  <tr><td>London 10%</td><td class="n">$3,500</td><td class="n">$1,585</td><td class="n">€933</td><td class="n">$5,834</td><td class="n">$2,640</td><td class="n">€1,547</td></tr>
+  <tr><td>London 25%</td><td class="n">$5,767</td><td class="n">$2,006</td><td class="n">€1,547</td><td class="n">$10,368</td><td class="n">$3,482</td><td class="n">€2,161</td></tr>
+  <tr><td>London 100%</td><td class="n">$15,169</td><td class="n">$6,860</td><td class="n">does not fit</td><td class="n">$29,171</td><td class="n">$13,190</td><td class="n">does not fit</td></tr>
+</table>
+</div>
+
+<ul>
+  <li>The platform runs on its own Amazon m6a.8xlarge: 32 cores, 128 GB, $1,167 a month by the hour or $530 on a 3-year commitment. On Hetzner it takes one more server at €319.</li>
+  <li>A 3-year commitment costs 45% of the hourly price on the usual machines, and 32% on the large-memory x2iedn machines. It is cheaper only for a machine busy more than that share of the time.</li>
+  <li>A Hetzner AX162 has 48 cores and up to 512 GB for at most €614 a month, and holds as many runs as its cores and memory allow.</li>
+  <li>More hardware does not make one run shorter. Six at once give six answers in the time of one, never one answer sooner.</li>
+  <li>Not priced: network traffic out of Amazon, and backups. The hours were measured on staging's processor and may differ on the machine bought.</li>
+</ul>
+
+<h2 id="tests">Tests before buying</h2>
+
+<div class="table-scroll">
+<table>
+  <tr><th>Test</th><th>What it settles</th></tr>
+  <tr><td>Build London from its street map, timetables and census, and run 10 rounds at 1% and 5%</td><td>London's own street pieces, minutes a round, memory and kept files, replacing the fit</td></tr>
+  <tr><td>Run Tallinn with every resident for 10 rounds</td><td>Minutes a round, memory and kept files at 100%, the end of every line</td></tr>
+  <tr><td>One Paris round on the faster traffic simulator, and with threads matched to cores</td><td>How short a scenario can get</td></tr>
+  <tr><td>Paris at 10% and 25%, 10 rounds, on 8 and 16 cores, and their files read from the store</td><td>Memory and kept files for a large city at large shares, and where more cores stop helping</td></tr>
+  <tr><td>A Tallinn day at 1% of 500 rounds, its score read with Polycity's settling check</td><td>The round where a day settles. A published test found that round the same at every share, so a small share measures it in about 6 hours of rounds.</td></tr>
+</table>
+</div>
+
+<h2>How sure each figure is</h2>
+
+<div class="table-scroll">
+<table>
+  <tr><th>Figure</th><th>Stands on</th><th>Made certain by</th></tr>
+  <tr><td>Minutes a round for Tallinn, Kraków, Budapest, Madrid and Paris at the shares measured</td><td>Measured, on today's software and today's staging machine</td><td>Already measured</td></tr>
+  <tr><td>Those cities at other shares</td><td>Fitted from 28 measurements</td><td>The two Paris runs</td></tr>
+  <tr><td>London's minutes a round</td><td>Fitted, assuming as many street pieces as Paris</td><td>Building London and running 10 rounds</td></tr>
+  <tr><td>Memory a run up to Paris at 5%</td><td>Measured: 27 running days read, and Paris at 5% finished inside 40 GB</td><td>Already measured</td></tr>
+  <tr><td>Memory for Paris above 5%, and for London</td><td>A line through the measured days, never yet tested above 40 GB</td><td>The two Paris runs, then London</td></tr>
+  <tr><td>Every figure at 100% of residents</td><td>Both lines carried ten times past the highest share measured, 10%</td><td>Tallinn at 100% for 10 rounds, then Paris</td></tr>
+  <tr><td>Files kept per resident</td><td>Measured on two Tallinn runs at 1% and 10% in the result store</td><td>Already measured</td></tr>
+  <tr><td>London's kept files that do not grow with residents, 9.3 GB</td><td>Tallinn's 0.89 GB scaled by street pieces, assumed</td><td>The two Paris runs, then London</td></tr>
+  <tr><td>Rounds a scenario and a baseline</td><td>Published models run 301 to 500 rounds. No Polycity run of 10 to 20 rounds passed Polycity's own settling check.</td><td>A Tallinn day at 1% of 500 rounds</td></tr>
+  <tr><td>Share of residents that keeps traffic figures true</td><td>One published test city: 25% or more kept them, 10% can stray</td><td>London at 10% and 25% set beside each other</td></tr>
+  <tr><td>Runs sharing one server do not slow each other</td><td>Not measured</td><td>Three Paris runs on one machine against one alone</td></tr>
+  <tr><td>Prices</td><td>Read from Amazon's and Hetzner's live lists on 28 Oct 2026</td><td>A quote at the time of buying</td></tr>
+</table>
+</div>
+
+<h2 id="shorten">What would shorten a London run</h2>
+
+<p>Hardware sets how many London scenarios run at once. Only the software sets how long a planner waits for one, and how much each keeps:</p>
+<ul>
+  <li>Make the traffic replay faster. It is 70% of a Tallinn round at 10%. The engine has a faster traffic simulator built for large cities, and whether Polycity's bike share, parking and transit additions run on it is the first test.</li>
+  <li>Carry a day across runs, saving residents' plans every 25 rounds so a run can continue where the last stopped.</li>
+  <li>Settle London's baseline once, and start every scenario from its settled plans for about 50 rounds.</li>
+  <li>Stop keeping the final events file, an exact copy of the last round's, which cuts a run's kept files by about a quarter.</li>
+</ul>
+
+<h2>Sources</h2>
+<ol class="sources">
+  <li>The moment each round began, for 1,152 simulated days on the films stack, joined to each run's city, share of residents and run size.</li>
+  <li>The residents and street pieces of every city behind those runs, from 185 summary files the city builds wrote.</li>
+  <li>Peak engine memory from 27 running simulated days on the staging Argo, read from their logs on 27 and 28 Oct 2026, each matched to its city, share and street count through the run's own stored inputs.</li>
+  <li>The Paris days of 14 and 16 Oct at 5%, which finished all five rounds with the country run size's 40 GB of engine memory, unchanged in the platform settings' history.</li>
+  <li>Kept result sizes of the films stack's large-city runs.</li>
+  <li>The engine's own timing file for 25 runs whose files are still in the store, for the start and the round.</li>
+  <li>Seven Tallinn test runs on 27 and 28 Oct 2026: their round moments, timing files, engine log lines and failure log tails.</li>
+  <li>The staging Argo's list of simulated days and why each waits, read on 27 Oct 2026 at 14:30.</li>
+  <li>Booked time, cores and memory of the films stack's 342 simulated days and 623 city builds.</li>
+  <li>Amazon's own price lists for London, published 27 Oct 2026: <a href="https://aws.amazon.com/ec2/pricing/on-demand/">machines by the hour</a>, Linux, and the full London list for commitment prices.</li>
+  <li>Hetzner's <a href="https://www.hetzner.com/dedicated-rootserver/ax162/">AX162 page</a> and <a href="https://www.hetzner.com/dedicated-rootserver/matrix-ax/">server list</a>, read on 28 Oct 2026.</li>
+  <li>The European Central Bank's <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">euro rate</a> of 27 Oct 2026.</li>
+  <li>Server memory prices from <a href="https://capitalandcompute.net/memory-prices/server/">Capital and Compute's tracker</a>, 27 Oct 2026.</li>
+  <li>Cores, memory and live memory of the films stack's containers on 27 Oct 2026.</li>
+  <li>Each run size's cores and memory, and the time limit for one run, from Polycity's platform settings and the films stack's changes to them.</li>
+  <li>Ben-Dor, Ben-Elia and Benenson, <a href="https://engineering.tau.ac.il/sites/engineering.tau.ac.il/files/media_server/Engineering/ShlomoShmeltzer/Golan%20Ben%20Dor_2021_Population%20downscaling%20in%20multi-agent%20transportation%20simulations_%20A%20review%20and%20case%20study.pdf">Population downscaling in multi-agent transportation simulations: a review and case study</a>, Simulation Modelling Practice and Theory 108, 2021. Read in full.</li>
+  <li>Horni and Nagel, <a href="https://d-nb.info/1172808686/34">More about configuring MATSim</a>, chapter 4 of The Multi-Agent Transport Simulation MATSim, 2016. Read in full.</li>
+  <li>The open Berlin model's <a href="https://github.com/matsim-scenarios/matsim-berlin/blob/main/input/v6.4/berlin-v6.4-10pct.config.xml">settings for version 6.4 at 10%</a>, read on 28 Oct 2026.</li>
+  <li>Graur, Bruno, Bischoff and others, <a href="https://www.dpss.inesc-id.pt/~rbruno/papers/dgraur-abmtrans21.pdf">Hermes: enabling efficient large-scale simulation in MATSim</a>, Procedia Computer Science, 2021. Read in full.</li>
+  <li><a href="https://matsim.org/news/2020/introducing-hermes/">Introducing Hermes</a>, the engine makers' announcement, 2020.</li>
+  <li>Llorca and Moeckel, <a href="https://portal.fis.tum.de/en/publications/effects-of-scaling-down-the-population-for-agent-based-traffic-si/">Effects of scaling down the population for agent-based traffic simulations</a>, Procedia Computer Science 151, 2019. Summary only, and as quoted by [16].</li>
+  <li><a href="https://github.com/matsim-org/matsim-code-examples/issues/189">Memory expectations for a large scenario</a>, answered by the engine's developers, 2019.</li>
+  <li>Laudan, Heinrich and Nagel, <a href="https://mdpi.com/2078-2489/16/2/116">a distributed traffic simulation for MATSim</a>, Information 16, 2025. Summary only.</li>
+  <li>The average score of every round for 20 finished Polycity runs still in the store, read on 28 Oct 2026, and Polycity's own settling check in the results service.</li>
+  <li>The plan-changing settings of a real Polycity run: half best plan, a quarter new route, an eighth new mode, an eighth new times, changes stopped at 80% of rounds.</li>
+  <li>Sizes of every file kept by 32 Tallinn results written 24 to 28 Oct 2026, read from the result store on 28 Oct, among them two 10-round days at 1% and 10% kept after the change to keep only the first and last round's events.</li>
+  <li>Amazon's London price lists for <a href="https://aws.amazon.com/s3/pricing/">file storage</a>, published 15 Oct 2026, and for <a href="https://aws.amazon.com/ebs/pricing/">working disks</a>, read on 28 Oct 2026.</li>
+  <li>Hetzner's <a href="https://www.hetzner.com/storage/object-storage/">object storage</a> and <a href="https://www.hetzner.com/storage/storage-box/">storage box</a> pages, read on 28 Oct 2026.</li>
+</ol>
+</main>
+</body>
+</html>
