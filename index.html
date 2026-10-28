@@ -48,8 +48,17 @@
     table.wrap td:first-child { min-width: 100px; }
     table.dense { font-size: 12px; }
     table.dense td:first-child { white-space: nowrap; }
-    .summary th, .summary td { padding: 5px 3px; }
-    .summary td.n small { white-space: normal; }
+    .summary th, .summary td { padding: 5px 2px; }
+    .summary table { font-size: 12px; }
+    .summary th { font-size: 10px; }
+    .summary th.n { width: auto; }
+    .summary td small { font-size: 11px; }
+    .summary td.n small, .summary td:first-child small { white-space: normal; }
+    table.wrap { font-size: 12px; }
+    table.wrap th { font-size: 10px; }
+    table.wrap th, table.wrap td { padding: 5px 2px; }
+    table.wrap td:first-child { min-width: 84px; }
+    table.wrap td.n small { white-space: normal; }
     table.dense th, table.dense td { padding: 5px 2px; }
   }
 </style>
@@ -62,32 +71,32 @@
 <section class="summary" id="summary">
 <h2>Executive summary</h2>
 
-<p class="lead">Six scenarios at once cost $1,913 a month for a city of half a million and $3,016 for London, simulating 10% of residents. That is a 3-year Amazon commitment with a year of results kept. Simulating every resident raises that to $4,534 and $9,118 to $14,438.</p>
+<p class="lead">Six scenarios at once cost €1,718 a month for a city of half a million and €2,709 for London, simulating 10% of residents. That is a 3-year Amazon commitment with a year of results kept. Simulating every resident raises that to €4,073 and €8,190 to €12,969. Buying the hardware instead, in a rented rack in Bulgaria, costs €40,764 to €197,211 once, or €1,352 to €3,960 a month spread over 5 years.</p>
 
 <h3>Six scenarios at once, 10% of residents</h3>
 <div class="table-scroll">
 <table>
-  <tr><th>City</th><th class="n">Memory a scenario</th><th class="n">Days a scenario</th><th class="n">Amazon 3-year, a month</th><th class="n">Hetzner, a month</th></tr>
-  <tr><td>Tallinn <small>0.5 million</small></td><td class="n">16 GB</td><td class="n">0.2</td><td class="n">$1,913<small>$985 storage</small></td><td class="n">€1,508<small>€280 storage</small></td></tr>
-  <tr><td>Kraków <small>0.8 million</small></td><td class="n">32 GB</td><td class="n">0.7</td><td class="n">$1,900<small>$574 storage</small></td><td class="n">€1,621<small>€163 storage</small></td></tr>
-  <tr><td>Paris <small>2.2 million</small></td><td class="n">72 GB</td><td class="n">3.8</td><td class="n">$2,956<small>$316 storage</small></td><td class="n">€2,303<small>€90 storage</small></td></tr>
-  <tr><td>Madrid <small>3.3 million</small></td><td class="n">56 GB</td><td class="n">2.5</td><td class="n">$2,096<small>$510 storage</small></td><td class="n">€2,358<small>€145 storage</small></td></tr>
-  <tr><td>London <small>8.9 million</small></td><td class="n">112 GB</td><td class="n">9.2</td><td class="n">$3,016<small>$376 storage</small></td><td class="n">€3,253<small>€107 storage</small></td></tr>
+  <tr><th>City</th><th class="n">Memory a scenario</th><th class="n">Days a scenario</th><th class="n">Amazon 3-year, a month</th><th class="n">Hetzner, a month</th><th class="n">Owned in Bulgaria, a month</th></tr>
+  <tr><td>Tallinn <small>0.5 million</small></td><td class="n">16 GB</td><td class="n">0.2</td><td class="n">€1,718<small>€885 storage</small></td><td class="n">€1,508<small>€280 storage</small></td><td class="n">€1,352<small>€40,764 to buy</small></td></tr>
+  <tr><td>Kraków <small>0.8 million</small></td><td class="n">32 GB</td><td class="n">0.7</td><td class="n">€1,707<small>€516 storage</small></td><td class="n">€1,621<small>€163 storage</small></td><td class="n">€1,352<small>€40,764 to buy</small></td></tr>
+  <tr><td>Paris <small>2.2 million</small></td><td class="n">72 GB</td><td class="n">3.8</td><td class="n">€2,655<small>€284 storage</small></td><td class="n">€2,303<small>€90 storage</small></td><td class="n">€1,641<small>€58,075 to buy</small></td></tr>
+  <tr><td>Madrid <small>3.3 million</small></td><td class="n">56 GB</td><td class="n">2.5</td><td class="n">€1,883<small>€458 storage</small></td><td class="n">€2,358<small>€145 storage</small></td><td class="n">€1,467<small>€47,652 to buy</small></td></tr>
+  <tr><td>London <small>8.9 million</small></td><td class="n">112 GB</td><td class="n">9.2</td><td class="n">€2,709<small>€338 storage</small></td><td class="n">€3,253<small>€107 storage</small></td><td class="n">€1,641<small>€58,075 to buy</small></td></tr>
 </table>
 </div>
 
 <h3>Six scenarios at once, every resident</h3>
 <div class="table-scroll">
 <table>
-  <tr><th>City</th><th class="n">Memory a scenario</th><th class="n">Days a scenario</th><th class="n">Amazon 3-year, a month</th><th class="n">Hetzner, a month</th></tr>
-  <tr><td>Tallinn <small>0.5 million</small></td><td class="n">40 GB</td><td class="n">0.5</td><td class="n">$4,534<small>$2,948 storage</small></td><td class="n">€2,317<small>€859 storage</small></td></tr>
-  <tr><td>Kraków <small>0.8 million</small></td><td class="n">72 GB</td><td class="n">1.7</td><td class="n">$4,230<small>$1,590 storage</small></td><td class="n">€2,669<small>€456 storage</small></td></tr>
-  <tr><td>Paris <small>2.2 million</small></td><td class="n">192 GB</td><td class="n">10.0</td><td class="n">$4,265<small>$783 storage</small></td><td class="n">€5,634<small>€223 storage</small></td></tr>
-  <tr><td>Madrid <small>3.3 million</small></td><td class="n">240 GB</td><td class="n">6.5</td><td class="n">$5,168<small>$1,686 storage</small></td><td class="n">€5,896<small>€485 storage</small></td></tr>
-  <tr><td>London <small>8.9 million</small></td><td class="n">616 GB<small>to 890 GB</small></td><td class="n">24.3</td><td class="n">$9,118<small>to $14,438</small></td><td class="n">does not fit<small>over 512 GB</small></td></tr>
+  <tr><th>City</th><th class="n">Memory a scenario</th><th class="n">Days a scenario</th><th class="n">Amazon 3-year, a month</th><th class="n">Hetzner, a month</th><th class="n">Owned in Bulgaria, a month</th></tr>
+  <tr><td>Tallinn <small>0.5 million</small></td><td class="n">40 GB</td><td class="n">0.5</td><td class="n">€4,073<small>€2,648 storage</small></td><td class="n">€2,317<small>€859 storage</small></td><td class="n">€1,549<small>€52,538 to buy</small></td></tr>
+  <tr><td>Kraków <small>0.8 million</small></td><td class="n">72 GB</td><td class="n">1.7</td><td class="n">€3,800<small>€1,428 storage</small></td><td class="n">€2,669<small>€456 storage</small></td><td class="n">€1,661<small>€59,296 to buy</small></td></tr>
+  <tr><td>Paris <small>2.2 million</small></td><td class="n">192 GB</td><td class="n">10.0</td><td class="n">€3,831<small>€703 storage</small></td><td class="n">€5,634<small>€223 storage</small></td><td class="n">€1,947<small>€76,453 to buy</small></td></tr>
+  <tr><td>Madrid <small>3.3 million</small></td><td class="n">240 GB</td><td class="n">6.5</td><td class="n">€4,642<small>€1,514 storage</small></td><td class="n">€5,896<small>€485 storage</small></td><td class="n">€2,085<small>€84,716 to buy</small></td></tr>
+  <tr><td>London <small>8.9 million</small></td><td class="n">616 GB<small>to 890 GB</small></td><td class="n">24.3</td><td class="n">€8,190<small>to €12,969</small></td><td class="n">does not fit<small>over 512 GB</small></td><td class="n">€3,960<small>€197,211 to buy</small></td></tr>
 </table>
 </div>
-<p class="note">Every scenario runs on 8 cores, Tallinn on 4. Days are for 200 rounds. A month includes the platform and a year of stored results; London's storage with every resident is $1,248. Storage assumes the six machines busy all month, so a small city stores the most: 900 Tallinn scenarios a month at 10%, against 20 for London. Fewer scenarios store less. Paris costs more than Madrid because its model holds more streets. Paying Amazon by the hour costs two to three times the 3-year price, and a 3-year commitment is owed whether the machines work or not. Hetzner's largest server holds 512 GB.</p>
+<p class="note">Every scenario runs on 8 cores, Tallinn on 4. Days are for 200 rounds. Every price is in euros; Amazon's dollar prices are turned at the European Central Bank's rate of 28 Oct, $1.1133 to the euro. A month includes the platform and a year of stored results; London's storage with every resident is €1,121. Owned hardware is the purchase spread over 5 years, plus rack and power; see <a href="#own">Buying the hardware</a>. Storage assumes the six machines busy all month, so a small city stores the most: 900 Tallinn scenarios a month at 10%, against 20 for London. Fewer scenarios store less. Paris costs more than Madrid because its model holds more streets. Paying Amazon by the hour costs two to three times the 3-year price, and a 3-year commitment is owed whether the machines work or not. Hetzner's largest server holds 512 GB.</p>
 
 <h3>What it means</h3>
 <ul>
@@ -96,14 +105,16 @@
   <li>London has never been built in Polycity, so its figures are fitted from 28 measurements of 24 cities.</li>
   <li>Published models run 300 to 500 rounds. This report plans on 200, which sets the days, not the machine.</li>
   <li>A year of stored results can cost as much as the machines. A small city's scenarios finish fastest, so it keeps the most.</li>
+  <li>Owned hardware costs least a month once it is kept 5 years, but the money is paid at the start. Memory is 17% to 82% of the purchase.</li>
 </ul>
 
 <h3>Recommendation</h3>
 <ul>
   <li>Commit to no hardware before the five runs in <a href="#tests">Tests before buying</a>. Two of them, Paris at 10% and 25%, are already sent to staging.</li>
-  <li>Rent by the hour for the tests. Ten rounds of London at 5% cost about $11 on Amazon.</li>
+  <li>Rent by the hour for the tests. Ten rounds of London at 5% cost about €10 on Amazon.</li>
   <li>Decide how long results are kept before choosing storage.</li>
   <li>Choose Hetzner where a scenario fits 512 GB and the hardware is wanted month to month, and Amazon above that.</li>
+  <li>Buy the hardware only when the cities and their share of residents are known for 5 years, after a written quote for the servers and a Sofia rack.</li>
 </ul>
 </section>
 
@@ -116,18 +127,19 @@
 <div class="table-scroll">
 <table class="wrap">
   <tr><th>Machines</th><th class="n">Holds 616 GB</th><th class="n">Holds 890 GB</th><th class="n">By the hour, a month</th><th class="n">3-year, a month</th></tr>
-  <tr><td>6 × Amazon r6a.24xlarge<small>768 GB each, platform apart</small></td><td class="n">yes</td><td class="n">no</td><td class="n">$29,171</td><td class="n">$13,190</td></tr>
-  <tr><td>6 × Amazon x2iedn.8xlarge<small>1,024 GB each, platform apart</small></td><td class="n">yes</td><td class="n">yes</td><td class="n">$37,973</td><td class="n">$12,336</td></tr>
-  <tr><td>2 × Amazon x2iedn.16xlarge<small>2,048 GB each, 3 runs each, platform included</small></td><td class="n">yes</td><td class="n">no</td><td class="n">$24,537</td><td class="n">$7,870</td></tr>
-  <tr><td>2 × Amazon x2iedn.24xlarge<small>3,072 GB each</small></td><td class="n">yes</td><td class="n">yes</td><td class="n">$36,805</td><td class="n">$11,806</td></tr>
+  <tr><td>6 × Amazon r6a.24xlarge<small>768 GB each, platform apart</small></td><td class="n">yes</td><td class="n">no</td><td class="n">€26,202</td><td class="n">€11,848</td></tr>
+  <tr><td>6 × Amazon x2iedn.8xlarge<small>1,024 GB each, platform apart</small></td><td class="n">yes</td><td class="n">yes</td><td class="n">€34,109</td><td class="n">€11,081</td></tr>
+  <tr><td>2 × Amazon x2iedn.16xlarge<small>2,048 GB each, 3 runs each, platform included</small></td><td class="n">yes</td><td class="n">no</td><td class="n">€22,040</td><td class="n">€7,069</td></tr>
+  <tr><td>2 × Amazon x2iedn.24xlarge<small>3,072 GB each</small></td><td class="n">yes</td><td class="n">yes</td><td class="n">€33,059</td><td class="n">€10,605</td></tr>
   <tr><td>Hetzner AX162<small>512 GB at most</small></td><td class="n">no</td><td class="n">no</td><td class="n" colspan="2">does not fit</td></tr>
+  <tr><td>Owned, one server in Bulgaria<small>6,144 GB, platform and storage included</small></td><td class="n">yes</td><td class="n">yes</td><td class="n" colspan="2">€3,960<small>over 5 years, €197,211 to buy</small></td></tr>
 </table>
 </div>
 
 <ul>
   <li>A scenario of 200 rounds keeps its machine about 24 days. If round time grows in step with residents, it takes about 91 days.</li>
   <li>Three scenarios sharing one server is not measured, and they may slow each other.</li>
-  <li>Paid only while running, six single scenarios cost $22,380 at 200 rounds.</li>
+  <li>Paid only while running, six single scenarios cost €20,102 at 200 rounds.</li>
   <li>Hetzner's servers stand in Germany and Finland only, with setup of €304 to €799 a server.</li>
 </ul>
 
@@ -139,21 +151,22 @@
 <table class="dense">
   <tr><th>London, 6 at once</th><th class="n">Kept a run</th><th class="n">Added a month</th><th class="n">After a year</th><th class="n">Amazon, 12th month</th><th class="n">Hetzner, 12th month</th></tr>
   <tr class="group"><td colspan="6">10% of residents, working disk 84 GB a run</td></tr>
-  <tr><td>50 rounds</td><td class="n">70 GB</td><td class="n">5.4 TB</td><td class="n">65 TB</td><td class="n">$1,393</td><td class="n">€398</td></tr>
-  <tr><td>200 rounds</td><td class="n">70 GB</td><td class="n">1.4 TB</td><td class="n">17 TB</td><td class="n">$360</td><td class="n">€102</td></tr>
+  <tr><td>50 rounds</td><td class="n">70 GB</td><td class="n">5.4 TB</td><td class="n">65 TB</td><td class="n">€1,251</td><td class="n">€398</td></tr>
+  <tr><td>200 rounds</td><td class="n">70 GB</td><td class="n">1.4 TB</td><td class="n">17 TB</td><td class="n">€323</td><td class="n">€102</td></tr>
   <tr class="group"><td colspan="6">25% of residents, working disk 194 GB a run</td></tr>
-  <tr><td>50 rounds</td><td class="n">162 GB</td><td class="n">8.6 TB</td><td class="n">103 TB</td><td class="n">$2,167</td><td class="n">€627</td></tr>
-  <tr><td>200 rounds</td><td class="n">162 GB</td><td class="n">2.2 TB</td><td class="n">26 TB</td><td class="n">$562</td><td class="n">€160</td></tr>
+  <tr><td>50 rounds</td><td class="n">162 GB</td><td class="n">8.6 TB</td><td class="n">103 TB</td><td class="n">€1,946</td><td class="n">€627</td></tr>
+  <tr><td>200 rounds</td><td class="n">162 GB</td><td class="n">2.2 TB</td><td class="n">26 TB</td><td class="n">€505</td><td class="n">€160</td></tr>
   <tr class="group"><td colspan="6">Every resident, working disk 744 GB a run</td></tr>
-  <tr><td>50 rounds</td><td class="n">620 GB</td><td class="n">18.4 TB</td><td class="n">221 TB</td><td class="n">$4,590</td><td class="n">€1,346</td></tr>
-  <tr><td>200 rounds</td><td class="n">620 GB</td><td class="n">4.7 TB</td><td class="n">56 TB</td><td class="n">$1,196</td><td class="n">€340</td></tr>
+  <tr><td>50 rounds</td><td class="n">620 GB</td><td class="n">18.4 TB</td><td class="n">221 TB</td><td class="n">€4,123</td><td class="n">€1,346</td></tr>
+  <tr><td>200 rounds</td><td class="n">620 GB</td><td class="n">4.7 TB</td><td class="n">56 TB</td><td class="n">€1,074</td><td class="n">€340</td></tr>
 </table>
 </div>
 
 <ul>
-  <li>The bill grows every month while nothing is deleted. Keeping three months at every resident and 50 rounds caps it near $1,236 a month on Amazon.</li>
-  <li>Amazon's store costs about $0.024 a GB a month, or $0.0131 for files rarely read, about 45% less. Hetzner's costs about €6.35 a TB.</li>
-  <li>Working disk while a scenario runs adds $44 a month for six London scenarios at 10% and $386 with every resident.</li>
+  <li>The bill grows every month while nothing is deleted. Keeping three months at every resident and 50 rounds caps it near €1,110 a month on Amazon.</li>
+  <li>Amazon's store costs about €0.0216 a GB a month, or €0.0118 for files rarely read, about 45% less. Hetzner's costs about €6.35 a TB.</li>
+  <li>Working disk while a scenario runs adds €40 a month for six London scenarios at 10% and €347 with every resident.</li>
+  <li>Owned, a storage server with 4 to 8 drives of 24 TB costs €9,002 to €13,889 once and keeps 48 to 144 TB, with two drives' worth spare against a failure.</li>
 </ul>
 
 <h2 id="assumptions">Why these assumptions</h2>
@@ -392,18 +405,19 @@
 <figcaption>Measured: the highest engine memory read from the engine's own log in 27 running days on 27 and 28 Oct, and the Paris days of 14 and 16 Oct that finished all five rounds inside 40 GB. The black mark is what the sizing allows.</figcaption>
 </figure>
 
-<h3>Amazon against Hetzner</h3>
+<h3>Amazon, Hetzner and owned hardware</h3>
 
-<p>Six London scenarios at 10% of residents, a month, at €1 = $1.115. Each scenario needs 112 GB.</p>
+<p>Six London scenarios at 10% of residents, a month. Each scenario needs 112 GB.</p>
 
 <div class="table-scroll">
 <table class="wrap">
-  <tr><th></th><th class="n">Amazon, 3-year</th><th class="n">Amazon, by the hour</th><th class="n">Hetzner, month to month</th></tr>
-  <tr><td>Machines for the scenarios</td><td class="n">$2,112<small>6 × 128 GB</small></td><td class="n">$4,668<small>6 × 128 GB</small></td><td class="n">€2,532<small>3 × 256 GB</small></td></tr>
-  <tr><td>Platform machine</td><td class="n">$530</td><td class="n">$1,167</td><td class="n">€614</td></tr>
-  <tr><td>Machines and platform, a month</td><td class="n">$2,642</td><td class="n">$5,835</td><td class="n">€3,146<small>$3,508</small></td></tr>
-  <tr><td>A GB of memory a month</td><td class="n">$2.75</td><td class="n">$6.08</td><td class="n">$3.68</td></tr>
-  <tr><td>Owed to stop after one month</td><td class="n">$95,112</td><td class="n">$5,835</td><td class="n">€3,146</td></tr>
+  <tr><th></th><th class="n">Amazon, 3-year</th><th class="n">Amazon, by the hour</th><th class="n">Hetzner, month to month</th><th class="n">Owned, over 5 years</th></tr>
+  <tr><td>Machines for the scenarios</td><td class="n">€1,897<small>6 × 128&nbsp;GB</small></td><td class="n">€4,193<small>6 × 128&nbsp;GB</small></td><td class="n">€2,532<small>3 × 256&nbsp;GB</small></td><td class="n">€579<small>1 × 768&nbsp;GB</small></td></tr>
+  <tr><td>Platform machine</td><td class="n">€476</td><td class="n">€1,048</td><td class="n">€614</td><td class="n">€239</td></tr>
+  <tr><td>Rack and power</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">€597</td></tr>
+  <tr><td>Machines and platform, a month</td><td class="n">€2,373</td><td class="n">€5,241</td><td class="n">€3,146</td><td class="n">€1,415</td></tr>
+  <tr><td>A GB of memory a month</td><td class="n">€2.47</td><td class="n">€5.46</td><td class="n">€3.31</td><td class="n">€1.47</td></tr>
+  <tr><td>Owed to stop after one month</td><td class="n">€85,432</td><td class="n">€5,241</td><td class="n">€3,146</td><td class="n">€49,072<small>already paid</small></td></tr>
 </table>
 </div>
 
@@ -412,6 +426,28 @@
   <li>Hetzner's AX162 costs €614 with 128 GB, €844 with 256 GB and €1,599 with 512 GB. Its platform takes a whole server.</li>
   <li>A 3-year commitment is cheaper only for a machine busy more than a third to a half of the time.</li>
   <li>Not priced: network traffic out of Amazon, and backups.</li>
+</ul>
+
+<h2 id="own">Buying the hardware</h2>
+
+<p>The servers are bought once and stand in a rented rack in Bulgaria, which bills its power apart. Prices are sellers' lists of 27 and 28 Oct, before VAT, turned into euros at $1.1133 [30–37].</p>
+
+<div class="table-scroll">
+<table class="wrap">
+  <tr><th>London, 6 at once</th><th class="n">To buy</th><th class="n">Over 3 years, a month</th><th class="n">Over 5 years, a month</th><th class="n">Amazon 3-year, a month</th></tr>
+  <tr><td>10% of residents<small>1 server of 768 GB</small></td><td class="n">€58,075</td><td class="n">€2,286</td><td class="n">€1,641</td><td class="n">€2,709</td></tr>
+  <tr><td>Every resident<small>1 server of 6,144 GB</small></td><td class="n">€197,211</td><td class="n">€6,151</td><td class="n">€3,960</td><td class="n">€8,190<small>to €12,969</small></td></tr>
+</table>
+</div>
+
+<ul>
+  <li>A scenario server is a Supermicro two-processor box at €4,419 with two 32-core AMD EPYC 9355 at €3,050 each, so €10,518 before memory.</li>
+  <li>Memory is bought in sticks: 64 GB at €2,017 and 256 GB at €6,755. Six London scenarios with every resident fill 24 sticks of 256 GB, €162,113, 82% of the purchase. The 128 GB stick is out of stock.</li>
+  <li>The platform machine has one processor and 192 GB, €14,356. The storage server holds 4 to 8 drives of 24 TB at €1,222 each, €9,002 to €13,889.</li>
+  <li>The rack is €330 a month. Power is €0.174 a kWh, with half again for cooling, €191 a month for each kW. One scenario server is taken to draw 1 kW, the platform and storage 0.4 kW each.</li>
+  <li>Six scenarios sharing one server is not measured, and they may slow each other.</li>
+  <li>Not priced: a spare server, a second copy of the results elsewhere, staff time, the internet connection and VAT.</li>
+  <li>Not checked: the rack price is Neterra's in Ruse, since no Sofia site publishes a full rack, and the box's seller names only the earlier EPYC 9004 series.</li>
 </ul>
 
 <h2 id="tests">Tests before buying</h2>
@@ -478,6 +514,14 @@
   <li>Amazon's London price lists for <a href="https://aws.amazon.com/s3/pricing/">file storage</a>, published 15 Oct 2026, and for <a href="https://aws.amazon.com/ebs/pricing/">working disks</a>, read on 28 Oct 2026.</li>
   <li>Hetzner's <a href="https://www.hetzner.com/storage/object-storage/">object storage</a> and <a href="https://www.hetzner.com/storage/storage-box/">storage box</a> pages, read on 28 Oct 2026.</li>
   <li>Laudan, Heinrich and Nagel, <a href="https://svn.vsp.tu-berlin.de/repos/public-svn/publications/vspwp/2024/24-09/LaudanEtAl2024DistributedQsimRust.pdf">Distributed parallel Qsim implementation in Rust</a>, TU Berlin working paper 24-09, 2024; published as <a href="https://depositonce.tu-berlin.de/items/d9fb992d-7229-49a4-a910-501e0bdcb982/full">High-performance mobility simulation</a>, Information 16(2), 2025.</li>
+  <li>Broadberry's price for the <a href="https://www.broadberry.com/superservers-supermicro-servers/as-2125hs-tnr&amp;asc=1">Supermicro AS-2125HS-TNR</a> box with 24 memory slots, read on 28 Oct 2026.</li>
+  <li>IT Creations' price for the <a href="https://www.itcreations.com/product/148913">AMD EPYC 9355</a>, in stock on 28 Oct 2026.</li>
+  <li><a href="https://capitalandcompute.net/memory-prices/server/">Server memory prices</a>, the lowest in-stock price of each stick size on 27 Oct 2026.</li>
+  <li>Supermicro's store price for the <a href="https://store.supermicro.com/">AS-2015CS-TNR</a> 12-drive storage server, read on 28 Oct 2026.</li>
+  <li><a href="https://datacenterdisk.com/cheapest-per-tb">Hard drive prices</a>, the WD Ultrastar 24 TB, read on 28 Oct 2026.</li>
+  <li>Neterra's <a href="https://sdc.bg/server-colocation">rack prices</a>, a 42U rack at €330 a month in Ruse with power apart, read on 28 Oct 2026.</li>
+  <li><a href="https://www.globalpetrolprices.com/Bulgaria/electricity_prices/">Bulgarian business power</a>, €0.174 a kWh with every tax and fee, March 2026.</li>
+  <li>The European Central Bank's <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html">euro reference rate</a>, 1.1133 dollars to the euro on 28 Oct 2026.</li>
 </ol>
 </main>
 </body>
